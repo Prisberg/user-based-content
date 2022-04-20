@@ -1,9 +1,10 @@
+import Login from "./Login";
 import Posts from "./Posts";
 
 function Homepage() {
     return (
         <div>
-             <Posts/>
+             <Login/>
         </div>
     );
 }
