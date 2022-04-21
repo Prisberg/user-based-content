@@ -6,11 +6,27 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-// import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Visibility } from '@mui/icons-material';
+interface State {
+    fullName: string;
+    username: string;
+    email: string;
+    password: string;
+    showPassword: boolean;
+  }
 
+ 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -27,6 +43,14 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function Register() {
+    const [values, setValues] = React.useState<State>({
+            fullName: '',
+            username: '',
+            email: '',
+            password: '',
+          showPassword: false,
+        });
+    
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -35,6 +59,22 @@ export default function Register() {
       password: data.get('password'),
     });
   };
+
+  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -56,6 +96,7 @@ export default function Register() {
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
+                <FormControl sx={{ m: 1, width: '25' }} variant="outlined">
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
@@ -65,8 +106,11 @@ export default function Register() {
                   label="First Name"
                   autoFocus
                 />
+
+                  </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
+                <FormControl sx={{ m: 1, width: '25' }} variant="outlined">
                 <TextField
                   required
                   fullWidth
@@ -75,8 +119,10 @@ export default function Register() {
                   name="lastName"
                   autoComplete="family-name"
                 />
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
+              <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
                 <TextField
                   required
                   fullWidth
@@ -85,19 +131,35 @@ export default function Register() {
                   name="email"
                   autoComplete="email"
                 />
+                </FormControl>
+
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
+              <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <OutlinedInput
+                id="outlined-adornment-password"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                onChange={handleChange('password')}
+                endAdornment={
+                <InputAdornment position="end">
+                    <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                    >
+                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
               </Grid>
               <Grid item xs={12}>
+              <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
                 <TextField
                   required
                   fullWidth
@@ -107,6 +169,8 @@ export default function Register() {
                   id="password"
                   autoComplete="new-password"
                 />
+               </FormControl>
+
               </Grid>
               <Grid item xs={12}>
                
