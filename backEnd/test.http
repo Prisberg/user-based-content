@@ -1,9 +1,7 @@
-POST http://localhost:3000/app/signup
-content-Type: application/json;
+POST http://localhost:8800/api/register
 
 {
-  "fullName": "hazem",
-  "username": "hazem",
-  "email": "hazem@gmail.com",
-  "password": "hazemhazem"
+  "username": "jhon",
+  "email": "hem@gmail.com",
+  "password": "987654321"
 }
