@@ -30,6 +30,10 @@ const signupTemplate = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now()
+  },
+  desc: {
+    type: String,
+    max:50,
   }
 },
 { timestamp: true}

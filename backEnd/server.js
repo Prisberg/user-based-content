@@ -7,8 +7,7 @@ const dotenv = require('dotenv');
 const registerRoutes = require('./routes/register')
 const usersRoutes = require('./routes/users')
 const loginRoutes = require('./routes/login')
-const helmet = require("helmet");
-const morgan = require("morgan");
+
 
 dotenv.config()
 mongoose.connect(
