@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const registerRoutes = require('./routes/register')
 const usersRoutes = require('./routes/users')
+const loginRoutes = require('./routes/login')
 const helmet = require("helmet");
 const morgan = require("morgan");
 
@@ -24,5 +25,6 @@ app.use(cors());
 
 app.use("/api/register", registerRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/login", loginRoutes);
 
 app.listen(port, () => {console.log('app is running on port:' + port)}); 

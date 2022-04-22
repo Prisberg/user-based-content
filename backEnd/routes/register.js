@@ -18,15 +18,10 @@ router.post('/', async (req, res) => {
    const newUser = await user.save()
     res.status(200).json(newUser)
  } catch (err) {
-  console.log(err);
- }
-  // .then(data => {
-  //   res.json(data)
-  // })
-  // .catch(err => {
-  //   res.json(err)
-  // })
-
+  res.status(500).json('error: ' + err.message)
+}
 })
+// login
+
 
 module.exports = router;
