@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ErrorBoundary from "./ErrorBoundary";
-import Homepage from "./Homepage";
-import Login from "./Login";
-import Register from "./Register";
+import ErrorBoundary from "./components/ErrorBoundary";
+import Homepage from "./components/Homepage";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
   return (
