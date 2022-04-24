@@ -1,11 +1,15 @@
-import { Avatar, Button, Grid, Paper, SxProps, TextField } from "@mui/material";
-import { textAlign, width } from "@mui/system";
-import React from "react";
+import { AppBar, Avatar, Box, Button, Drawer, Grid, IconButton, Paper, SxProps, TextField, Toolbar, Typography } from "@mui/material";
+import Menu from "./Menu";
 
 
 
-function Login() {
+
+function Login(){
+    
+
     return (
+        <Box>
+        <Menu/>
         <Grid>
             <Paper elevation={10} sx={paperStyle}>
                 <Grid sx={text}>
@@ -44,6 +48,7 @@ function Login() {
                 </span>
             </Paper>
         </Grid>
+        </Box>
     );
 }
 
@@ -74,6 +79,17 @@ const button: SxProps = {
 }
 const signUp: SxProps = {
     marginTop: '2px'
+}
+const menu: SxProps = {
+    backgroundColor: '#fff'
+}
+const icon: SxProps = {
+    display: 'flex',
+    
+}
+const iconStyle: SxProps = {
+    fontSize: '3rem',
+    color: 'black'
 }
 
 export default Login;
