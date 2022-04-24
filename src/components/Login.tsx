@@ -1,11 +1,99 @@
-import { AppBar, Avatar, Box, Button, Drawer, Grid, IconButton, Paper, SxProps, TextField, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, Button, Container, Drawer, FormControl, Grid, IconButton, Paper, SxProps, TextField, Toolbar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 
+export default function Login() {
+    return (
+        <Container>
+            <Box 
+            sx={{
+            marginTop: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+            <Avatar sx={{ m: 1, bgcolor: '#42a5f5' }}>
+            </Avatar>
+            <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 3 }}>
+            <Grid spacing={2}>
+              
+              <Grid item xs={12} >
+              <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+                </FormControl>
+
+              </Grid>
+              <Grid item xs={12} >
+              <FormControl sx={{ m: 1, mt: 3 , width: '30ch' }} variant="outlined">
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Confirm Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+               </FormControl>
+              </Grid>
+              <Grid  xs={12} >
+              <Button 
+                sx={button}
+                type="submit" 
+                color="primary"
+                variant="contained" 
+                fullWidth
+                >
+                Sign in
+                </Button>
+                </Grid>
+                <Grid item xs={12} sx={signUp}>
+                <span style={{ marginTop: '2px' }}> 
+                No account?
+                <Link to={'/register'}>
+                <Button >
+                    Sign up
+                </Button>
+                </Link>
+                </span>
+                </Grid>
+              </Grid>
+            </Box>
+            </Box>
+        </Container>
+    )
+}
+
+const button: SxProps = {
+    marginTop: '2rem',
+    width: '12rem',
+    marginLeft: '4rem'
+}
+const signUp: SxProps = {
+    marginTop: '2rem',
+    marginLeft: '5rem'
+}
 
 
 
-function Login(){
+
+
+
+
+
+
+
+/* function Login(){
     
 
     return (
@@ -18,10 +106,12 @@ function Login(){
                 SIGN IN
                 </Grid>
                 <TextField 
+                autoComplete="email"
                 label='Email' 
                 placeholder='Enter email' 
                 fullWidth 
                 required
+                autoFocus
                 sx={email}
                 />
                 <TextField 
@@ -95,4 +185,4 @@ const iconStyle: SxProps = {
 }
 
 export default Login;
-
+ */

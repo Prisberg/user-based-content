@@ -85,8 +85,8 @@ const Menu: React.FC<Props> = () => {
             '& .MuiDrawer-paper': {
                 marginTop: '5rem',
                 
-                width: '18%',
-                height: '40%',
+                width: { xs: drawerWidth, sm: '35%', md: '25%', lg: '18%' },
+                height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
                 backgroundColor: '#E5E5E5',
                 borderRadius: '20px'
 
@@ -103,7 +103,7 @@ const Menu: React.FC<Props> = () => {
         </DrawerHeader>
         <Box >
         <Link to={'/'} style={{ textDecoration: 'none' }}>
-        <Button type="submit" variant='text'  sx={button}> <HomeIcon sx={loginIcon} /> Home</Button>
+        <Button type="submit" variant='text'  sx={homeButton}> <HomeIcon sx={loginIcon} /> Home</Button>
         </Link>
         </Box>
         <br />
@@ -123,6 +123,10 @@ const Menu: React.FC<Props> = () => {
     );
 }
 const button: SxProps = {
+    fontSize:'1.5rem'
+}
+const homeButton: SxProps = {
+    marginTop: '1rem',
     fontSize:'1.5rem'
 }
 const home: SxProps = {
