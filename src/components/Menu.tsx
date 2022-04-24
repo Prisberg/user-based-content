@@ -56,7 +56,8 @@ const Menu: React.FC<Props> = () => {
                 <AppBar position="static" color="inherit">
                     <Toolbar>         
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    <Link to={'/'}><Button
+                    <Link to={'/'} style={{ textDecoration: 'none' }}>
+                    <Button
                     type="submit"
                     sx={home}
                     // sx={{ mt: 3, mb: 2 }}
@@ -101,19 +102,19 @@ const Menu: React.FC<Props> = () => {
             </IconButton>
         </DrawerHeader>
         <Box >
-        <Link to={'/'}>
+        <Link to={'/'} style={{ textDecoration: 'none' }}>
         <Button type="submit" variant='text'  sx={button}> <HomeIcon sx={loginIcon} /> Home</Button>
         </Link>
         </Box>
         <br />
         <Box >
-        <Link to={'/login'}>
+        <Link to={'/login'} style={{ textDecoration: 'none' }}>
         <Button type="submit" variant='text'  sx={button}> <LoginIcon sx={loginIcon} /> Log in</Button>
         </Link>
         </Box>
         <br />
         <Box sx={button}>
-        <Link to={'/register'}>
+        <Link to={'/register'} style={{ textDecoration: 'none' }}>
         <Button type="submit" variant='text'  sx={button}> <AssignmentIndIcon sx={loginIcon} />Register</Button>
         </Link>
         </Box>
