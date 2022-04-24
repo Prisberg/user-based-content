@@ -31,7 +31,7 @@ function Homepage() {
             alignItems: 'center',
           }}
         >
-            <Link to={'/Register'}><Button
+            <Link to={'/Register'} style={{ textDecoration: 'none' }}><Button
               type="submit"
               variant="contained"
               sx={{ mt: 3, mb: 2, mr: 3 }}
@@ -39,7 +39,7 @@ function Homepage() {
               Register
             </Button>
             </Link>
-            <Link to={'/Login'}><Button
+            <Link to={'/Login'} style={{ textDecoration: 'none' }}><Button
               type="submit"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
