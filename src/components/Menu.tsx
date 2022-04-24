@@ -48,36 +48,33 @@ const Menu: React.FC<Props> = () => {
 
     return (
         <Box>
-        <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" color="inherit">
-        <Toolbar>
-          
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Sign in
-          </Typography>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            sx={{ ...(open && { display: 'none' }) }}
-            >
-            <Avatar/>
-          </IconButton>
-          
-        </Toolbar>
-      </AppBar>
-      </Box>
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static" color="inherit">
+                    <Toolbar>         
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    Sign in
+                    </Typography>
+                    <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    sx={{ ...(open && { display: 'none' }) }}>
+                    <Avatar/>
+                    </IconButton>  
+                    </Toolbar>
+                </AppBar>
+             </Box> 
         <Drawer
-        sx={{
+            sx={{
             position: 'absolute',
             flexShrink: 0,
             '& .MuiDrawer-paper': {
                 marginTop: '4rem',
                 marginRight: '1rem',
-                width: { xs: drawerWidth, sm: '60%', md: '40%', lg: '20%' },
-                height: { xs: drawerHeight, sm: '60%', md: '40%', lg: '15%' },
+                width: '20%',
+                height: '15%',
                 backgroundColor: '#C4C4C4',
                 borderRadius: '20px'
 
