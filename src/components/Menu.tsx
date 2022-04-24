@@ -4,6 +4,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import React from "react";
 import CloseIcon from '@mui/icons-material/Close';
+import LoginIcon from '@mui/icons-material/Login';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import HomeIcon from '@mui/icons-material/Home';
+import { Link } from "react-router-dom";
 
 
 interface AppBarProps extends MuiAppBarProps {
@@ -52,7 +56,14 @@ const Menu: React.FC<Props> = () => {
                 <AppBar position="static" color="inherit">
                     <Toolbar>         
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Sign in
+                    <Link to={'/'}><Button
+                    type="submit"
+                    sx={home}
+                    // sx={{ mt: 3, mb: 2 }}
+                    >
+                    Home
+                    </Button>
+                    </Link>
                     </Typography>
                     <IconButton
                     size="large"
@@ -71,11 +82,11 @@ const Menu: React.FC<Props> = () => {
             position: 'absolute',
             flexShrink: 0,
             '& .MuiDrawer-paper': {
-                marginTop: '4rem',
-                marginRight: '1rem',
-                width: '20%',
-                height: '15%',
-                backgroundColor: '#C4C4C4',
+                marginTop: '5rem',
+                
+                width: '18%',
+                height: '40%',
+                backgroundColor: '#E5E5E5',
                 borderRadius: '20px'
 
             },
@@ -89,23 +100,40 @@ const Menu: React.FC<Props> = () => {
                 <CloseIcon sx={iconStyle} />
             </IconButton>
         </DrawerHeader>
-        <Button type="submit" sx={button}>Log in</Button>
+        <Box >
+        <Link to={'/'}>
+        <Button type="submit" variant='text'  sx={button}> <HomeIcon sx={loginIcon} /> Home</Button>
+        </Link>
+        </Box>
+        <br />
+        <Box >
+        <Link to={'/login'}>
+        <Button type="submit" variant='text'  sx={button}> <LoginIcon sx={loginIcon} /> Log in</Button>
+        </Link>
+        </Box>
+        <br />
+        <Box sx={button}>
+        <Link to={'/register'}>
+        <Button type="submit" variant='text'  sx={button}> <AssignmentIndIcon sx={loginIcon} />Register</Button>
+        </Link>
+        </Box>
         </Drawer>
         </Box>
     );
 }
 const button: SxProps = {
-    color: 'black',
-    backgroundColor: '#fff',
-    width: '10rem',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    borderRadius: '10px'
-
+    fontSize:'1.5rem'
+}
+const home: SxProps = {
+    fontSize: '2rem'
 }
 const iconStyle: SxProps = {
     fontSize: '2rem',
     color: 'black'
+}
+const loginIcon: SxProps = {
+    fontSize: '2rem',
+    marginRight: '2rem'
 }
 
 export default Menu;
