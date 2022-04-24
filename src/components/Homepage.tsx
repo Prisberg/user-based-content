@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 
 function Homepage() {
     return (
+
         <Fragment>
 
         <Box
@@ -48,6 +49,7 @@ function Homepage() {
             </Box>
             </Box>
         </Fragment>
+
     );
 }
 
