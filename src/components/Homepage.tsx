@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Posts from "./Posts";
 import Register from "./Register";
+import Login from "./Login";
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
