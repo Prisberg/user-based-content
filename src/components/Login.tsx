@@ -1,5 +1,6 @@
 import { AppBar, Avatar, Box, Button, Drawer, Grid, IconButton, Paper, SxProps, TextField, Toolbar, Typography } from "@mui/material";
-import Menu from "./Menu";
+import { Link } from "react-router-dom";
+
 
 
 
@@ -9,7 +10,6 @@ function Login(){
 
     return (
         <Box>
-        <Menu/>
         <Grid>
             <Paper elevation={10} sx={paperStyle}>
                 <Grid sx={text}>
@@ -42,9 +42,11 @@ function Login(){
                 </Button>
                 <span style={{ marginTop: '2px' }}> 
                 No account?
+                <Link to={'/register'}>
                 <Button sx={signUp}>
                     Sign up
                 </Button>
+                </Link>
                 </span>
             </Paper>
         </Grid>
