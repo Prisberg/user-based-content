@@ -12,3 +12,9 @@ export interface DbUserInterface {
   isAdmin: boolean;
   _id: string;
 }
+
+export interface IPost {
+  userId: string;
+  description: string;
+  img?: string;
+}
