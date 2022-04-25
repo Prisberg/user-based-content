@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import {IPost} from '../interfaces'
 const postSchema = new mongoose.Schema(
 {
   userId: { 
@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema(
 
 },
 )
+ const Post = mongoose.model<IPost>("Post", postSchema);
 
-
-export default mongoose.model('Post', postSchema);
+ export default Post
 
