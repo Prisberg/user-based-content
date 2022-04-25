@@ -31,7 +31,20 @@ postsRouter.put('/:id', async (req :Request, res:Response) => {
  }
  })
 
+// Delete a post
+postsRouter.delete('/:id', async (req :Request, res:Response) => {
+  try { 
+    const post = await  PostModel.findById(req.params.id);
+ if (post.userId === req.body.userId) {
+   await post.deleteOne({$set:req.body})
+   res.status(200).json('Post has been deleted successfully');
 
-
+ } else {
+   res.status(403).json('you cant delete this corse')
+ }
+ } catch (err) {
+  res.status(500).json('error: ' + err.message)
+ }
+})
 
 export default postsRouter;
