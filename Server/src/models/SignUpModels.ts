@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const signupTemplate = new mongoose.Schema({
   username:{
@@ -30,13 +30,8 @@ const signupTemplate = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now()
-  },
-  desc: {
-    type: String,
-    max:50,
   }
 },
-{ timestamp: true}
 )
 
-module.exports = mongoose.model('Users', signupTemplate)
+export default mongoose.model('Users', signupTemplate);
