@@ -2,6 +2,7 @@ import { AppBar, Avatar, Box, Button, Container, Drawer, FormControl, Grid, Icon
 import { Link } from "react-router-dom";
 
 
+
 export default function Login() {
     return (
         <Container>
@@ -39,14 +40,14 @@ export default function Login() {
                   required
                   fullWidth
                   name="password"
-                  label="Confirm Password"
+                  label="Password"
                   type="password"
                   id="password"
-                  autoComplete="new-password"
                 />
                </FormControl>
               </Grid>
               <Grid  xs={12} >
+            <Link to={'/'} style={{ textDecoration: 'none' }}>
               <Button 
                 sx={button}
                 type="submit" 
@@ -56,17 +57,15 @@ export default function Login() {
                 >
                 Sign in
                 </Button>
-                </Grid>
-                <Grid item xs={12} sx={signUp}>
-                <span style={{ marginTop: '2px' }}> 
-                No account?
-                <Link to={'/register'}>
-                <Button >
-                    Sign up
-                </Button>
                 </Link>
-                </span>
                 </Grid>
+                <Grid container justifyContent="center">
+              <Grid item>
+                <Link to="/register">
+                  No account? Sign up here
+                </Link>
+              </Grid>
+            </Grid>
               </Grid>
             </Box>
             </Box>
@@ -76,6 +75,7 @@ export default function Login() {
 
 const button: SxProps = {
     marginTop: '2rem',
+    marginBottom: '2rem',
     width: '12rem',
     marginLeft: '4rem'
 }
