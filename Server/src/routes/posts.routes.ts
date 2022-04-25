@@ -20,7 +20,17 @@ postsRouter.get('/',  (req :Request, res:Response) => {
     }
   });
 })
+//  get a post
+postsRouter.get('/:id',  (req :Request, res:Response) => {
 
+  const posts = Post.findById(req.params.id, (err: any, post: any) =>{
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(post);
+    }
+  }) 
+})
 //  Creat a New Post
 postsRouter.post('/', async (req :Request, res:Response) => {
   const newPost =  new Post(req.body);
@@ -54,8 +64,8 @@ postsRouter.put('/:id',  (req :Request, res:Response) => {
 postsRouter.delete('/:id', async (req :Request, res:Response) => {
   try { 
     const post = await  Post.findById(req.params.id);
- if (post.userId === req.body.userId) {
-   await post.deleteOne({$set:req.body})
+ if (post?.userId === req.body.userId) {
+   await post?.deleteOne({$set:req.body})
    res.status(200).json('Post has been deleted successfully');
 
  } else {
