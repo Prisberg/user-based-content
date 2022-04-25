@@ -1,57 +1,36 @@
-import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Box, createTheme, SxProps, Typography } from "@mui/material";
+import { fontWeight } from "@mui/system";
+import Menu from "./Menu";
 import Posts from "./Posts";
-import Register from "./Register";
-import Login from "./Login";
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 
 function Homepage() {
+
     return (
-
-        <Fragment>
-
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-            <div className="posts">
-             <Posts/>
-            </div>
-            <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-            <Link to={'/Register'} style={{ textDecoration: 'none' }}><Button
-              type="submit"
-              variant="contained"
-              sx={{ mt: 3, mb: 2, mr: 3 }}
-            >
-              Register
-            </Button>
-            </Link>
-            <Link to={'/Login'} style={{ textDecoration: 'none' }}><Button
-              type="submit"
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Login
-            </Button>
-            </Link>
-            </Box>
-            </Box>
-        </Fragment>
-
+        <Box sx={boxStyle}>
+            <Typography
+                variant="h1"
+                sx={h1Style}>
+                Welcome to Post
+            </Typography>
+            <Typography>Sign in to speak your mind, keep it friendly</Typography>
+            <Posts />
+        </Box>
     );
 }
 
 export default Homepage;
+
+const h1Style: SxProps = {
+    color: '#333',
+    fontSize: { xs: '2.5rem', sm: '4rem', xl: '5rem' },
+}
+
+const boxStyle: SxProps = {
+    backgroundColor: 'white',
+    padding: '2rem',
+    height: '100%',
+    maxWidth: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column'
+}

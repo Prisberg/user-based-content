@@ -1,21 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ErrorBoundary from "./components/ErrorBoundary";
-import Homepage from "./components/Homepage";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Menu from "./components/Menu";
+import BadGate from "./BadGate";
+import ErrorBoundary from "./ErrorBoundary";
+import Homepage from "./Homepage";
 
 function App() {
   return (
     <BrowserRouter>
       <ErrorBoundary>
-      <Menu/>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
-        <Route path="*" element={<div>Invalid URL, sorry.</div>} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="*" element={<BadGate />} />
+        </Routes>
       </ErrorBoundary>
     </BrowserRouter>
   );
