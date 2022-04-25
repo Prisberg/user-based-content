@@ -1,11 +1,10 @@
-import mongoose from 'mongoose';
 import express, { Request, Response, Router  } from 'express';
 import bcrypt from 'bcryptjs';
 import User  from '../models/SignUpModels'
 
-const usersRouter = Router();
+const signupRouter = Router();
 
-usersRouter.post('/', async (req :Request, res:Response) => {
+signupRouter.post('/', async (req :Request, res:Response) => {
   const { username, password, email } = req?.body;
   try {
     const hashPassword = await bcrypt.hash(password, 10);
@@ -23,4 +22,4 @@ usersRouter.post('/', async (req :Request, res:Response) => {
 
 })
 
-export default usersRouter;
+export default signupRouter;

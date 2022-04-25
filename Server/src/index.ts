@@ -8,8 +8,10 @@ import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 const Port = 3000;
 import User  from './models/SignUpModels'
-import usersRouter from './routes/register.routes';
+import signupRouter from './routes/register.routes';
 import loginRouter from './routes/login.routes';
+import postsRouter from './routes/posts.routes';
+import usersRouter from './routes/users.routes';
 
 dotenv.config();
 const routes = Router();
@@ -35,8 +37,10 @@ app.use(passport.session());
 
 
 //Routes 
-routes.use('/api/register', usersRouter)
+routes.use('/api/register', signupRouter)
 routes.use('/api/login', loginRouter)
+routes.use('/api/posts', postsRouter)
+routes.use('/api/user', usersRouter)
 
 
 app.listen(Port, () => {
