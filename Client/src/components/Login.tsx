@@ -1,9 +1,23 @@
 import { AppBar, Avatar, Box, Button, Container, Drawer, FormControl, Grid, IconButton, Paper, SxProps, TextField, Toolbar, Typography } from "@mui/material";
+import { useRef, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
+import { loginCall } from "../apiAxios";
 
 
 
 export default function Login() {
+  const email = useRef();
+  const password = useRef();
+  const { isFetching, dispatch } = useContext(AuthContext);
+  
+  const handleClick = (e) => {
+    e.preventDefault();
+    loginCall(
+      { email: email.current.value, password: password.current.value },
+      dispatch
+    );
+  };
     return (
         <Container>
             <Box 
@@ -19,7 +33,7 @@ export default function Login() {
             Sign in
           </Typography>
           <Box component="form" noValidate sx={{ mt: 3 }}>
-            <Grid spacing={2}>
+            <Grid>
               
               <Grid item xs={12} >
               <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
@@ -34,7 +48,7 @@ export default function Login() {
                 </FormControl>
 
               </Grid>
-              <Grid item xs={12} >
+              <Grid item  >
               <FormControl sx={{ m: 1, mt: 3 , width: '30ch' }} variant="outlined">
                 <TextField
                   required
@@ -46,13 +60,14 @@ export default function Login() {
                 />
                </FormControl>
               </Grid>
-              <Grid  xs={12} >
+              <Grid   >
             <Link to={'/'} style={{ textDecoration: 'none' }}>
               <Button 
                 sx={button}
                 type="submit" 
                 color="primary"
-                variant="contained" 
+                variant="contained"
+                onSubmit={handleClick}
                 fullWidth
                 >
                 Sign in
@@ -83,13 +98,6 @@ const signUp: SxProps = {
     marginTop: '2rem',
     marginLeft: '5rem'
 }
-
-
-
-
-
-
-
 
 
 
