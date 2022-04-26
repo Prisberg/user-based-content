@@ -9,15 +9,10 @@ import { loginCall } from "../apiAxios";
 export default function Login() {
   const email = useRef();
   const password = useRef();
-  const { isFetching, dispatch } = useContext(AuthContext);
+  // const { isFetching, dispatch } = useContext(AuthContext);
   
-  const handleClick = (e) => {
-    e.preventDefault();
-    loginCall(
-      { email: email.current.value, password: password.current.value },
-      dispatch
-    );
-  };
+ 
+ 
     return (
         <Container>
             <Box 
@@ -67,7 +62,6 @@ export default function Login() {
                 type="submit" 
                 color="primary"
                 variant="contained"
-                onSubmit={handleClick}
                 fullWidth
                 >
                 Sign in
