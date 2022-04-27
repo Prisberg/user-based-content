@@ -1,7 +1,7 @@
 import { Box, createTheme, SxProps, Typography } from "@mui/material";
 import { fontWeight } from "@mui/system";
 import Menu from "./Menu";
-import PostsFeed from "./Posts";
+import Posts from "./Posts";
 
 function Homepage() {
 
@@ -13,7 +13,7 @@ function Homepage() {
                 Welcome to Post
             </Typography>
             <Typography>Sign in to speak your mind, keep it friendly</Typography>
-            <PostsFeed />
+            <Posts />
         </Box>
     );
 }
