@@ -138,14 +138,12 @@ const Menu: React.FC<Props> = () => {
                 <Button type="submit" variant='text' sx={button}> <AssignmentIndIcon sx={loginIcon} />Register</Button>
             </Link>
         </Box>
-        </>
-        )
-       }
         </Drawer>
-      
         </Box>
     );
 }
+
+
 const button: SxProps = {
     fontSize:'1.5rem'
 }
