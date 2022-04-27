@@ -136,21 +136,14 @@ const Menu: React.FC<Props> = () => {
                 <Button type="submit" variant='text' sx={button}> <AssignmentIndIcon sx={loginIcon} />Register</Button>
             </Link>
         </Box>
-<<<<<<< HEAD
-=======
         
         )
        
->>>>>>> a358a6ed900ead0d49de36b96d8c52c1f6bc8868
         </Drawer>
         </Box>
     );
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> a358a6ed900ead0d49de36b96d8c52c1f6bc8868
 const button: SxProps = {
     fontSize:'1.5rem'
 }
