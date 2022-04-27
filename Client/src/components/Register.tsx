@@ -58,7 +58,6 @@ export default function Register() {
       if (res.data === "success") {
        window.location.href = "/Login"
        console.log('suc');
-       
      }
     }, () => {
       console.log("Failure");
@@ -78,7 +77,7 @@ export default function Register() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    if(!data) {
+    if(data) {
       window.location.href = "/Login"
     }
   };

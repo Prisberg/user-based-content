@@ -20,10 +20,10 @@ export function APIContextProvider(props: { children: any }) {
   );
 }
 
-export function useAPI() {
-  const context = useContext(APIContext);
-  if (context === undefined) {
-    throw new Error("Context must be used within a Provider");
-  }
-  return context;
-}
+// export function useAPI() {
+//   const context = useContext(APIContext);
+//   if (context === undefined) {
+//     throw new Error("Context must be used within a Provider");
+//   }
+//   return context;
+// }
