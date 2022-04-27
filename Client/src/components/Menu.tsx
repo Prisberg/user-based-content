@@ -10,7 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { Link } from "react-router-dom";
 import Axios, { AxiosResponse } from "axios";
 
-// import { APIContext } from '../Context/AuthContext'
+import { APIContext } from '../Context/AuthContext'
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -29,13 +29,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 const Menu: React.FC<Props> = () => {
-    // const ctx = useContext(APIContext);
+    const ctx = useContext(APIContext);
     const logout = () => {
         Axios.get("http://localhost:4000/logout", {
           withCredentials: true
         }).then((res : AxiosResponse) => {
           if (res.data === "success") {
-            window.location.href = "/register";
+            window.location.href = "/";
           }
         })
       }
@@ -111,25 +111,30 @@ const Menu: React.FC<Props> = () => {
                 <CloseIcon sx={iconStyle} />
             </IconButton>
         </DrawerHeader>
-       
+       <div>
+           {ctx ? (
+               <>
         <Box >
-        <Link to={'/'} style={{ textDecoration: 'none' }}>
-        <Button type="submit" variant='text'  sx={homeButton}> <HomeIcon sx={loginIcon} /> Home</Button>
+            <Link onClick={logout} to="/logout" style={{ textDecoration: 'none' }}>
+            <Button type="submit" variant='text'  sx={homeButton}> <HomeIcon sx={loginIcon} /> logout</Button>
         </Link>
         </Box>
         <br />
-
         <Box >
+            <Link to={'/user'} style={{ textDecoration: 'none' }}>
+            <Button type="submit" variant='text'  sx={homeButton}> <Avatar sx={loginIcon} /> User</Button>
         <Link to={'/user'} style={{ textDecoration: 'none' }}>
         <Button type="submit" variant='text'  sx={button}> <PersonIcon sx={loginIcon} /> User</Button>
         </Link>
         </Box>
         <br />
+               </>
+           ): (
+               <>
         <Box >
-        <Link to={'/login'} style={{ textDecoration: 'none' }}>
-        <Button type="submit" variant='text'  sx={button}> <LoginIcon sx={loginIcon} /> Log in</Button>
+            <Link to={'/login'} style={{ textDecoration: 'none' }}>
+            <Button type="submit" variant='text'  sx={button}> <LoginIcon sx={loginIcon} /> Log in</Button>
         </Link>
-
         </Box>
         <br />
         <Box sx={button}>
@@ -137,8 +142,12 @@ const Menu: React.FC<Props> = () => {
                 <Button type="submit" variant='text' sx={button}> <AssignmentIndIcon sx={loginIcon} />Register</Button>
             </Link>
         </Box>
-               
-        </Drawer>
+               </>
+           )}
+        </div>
+        )
+       
+         </Drawer>
         </Box>
     );
 }
