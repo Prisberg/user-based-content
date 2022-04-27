@@ -3,14 +3,14 @@ import { Box, Card, Grid, Paper, SxProps, Typography } from "@mui/material";
 
 /* Temporary posts */
 
-interface PostInfo {
+export interface PostInfo {
     id: number;
     poster: string;
     titel: string;
     content: string;
 }
 
-const posts: PostInfo[] = [
+export const posts: PostInfo[] = [
     {
         id: 0,
         poster: 'Göran',

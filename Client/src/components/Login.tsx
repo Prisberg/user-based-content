@@ -20,6 +20,8 @@ export default function Login() {
   }).then((res : AxiosResponse) => {
     if (res.data === "success") {
      console.log("success");
+     /* TEMPORARY? */
+     
    }
   }, () => {
     console.log("Failure");
