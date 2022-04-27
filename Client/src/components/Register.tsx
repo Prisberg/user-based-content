@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import axios, { AxiosResponse } from "axios";
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -15,11 +15,10 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Visibility } from '@mui/icons-material';
+import { useState } from 'react';
 interface State {
-    fullName: string;
     username: string;
     email: string;
     password: string;
@@ -43,8 +42,29 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function Register() {
+  const [username, setUsername] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+
+
+  const register = async () => {
+    await axios.post("http://localhost:4000/register", {
+      username,
+      email,
+      password
+    }, {
+      withCredentials: true
+    }).then((res : AxiosResponse) => {
+      if (res.data === "success") {
+       window.location.href = "/Login"
+       console.log('suc');
+       
+     }
+    }, () => {
+      console.log("Failure");
+    })
+  }
     const [values, setValues] = React.useState<State>({
-            fullName: '',
             username: '',
             email: '',
             password: '',
@@ -58,10 +78,14 @@ export default function Register() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    if(!data) {
+      window.location.href = "/Login"
+    }
   };
 
   const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [prop]: event.target.value });
+      setPassword(event.target.value)
     };
   const handleClickShowPassword = () => {
     setValues({
@@ -105,11 +129,12 @@ export default function Register() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={e => setUsername(e.target.value)}
                 />
 
                   </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <FormControl sx={{ m: 1, width: '25' }} variant="outlined">
                 <TextField
                   required
@@ -120,7 +145,7 @@ export default function Register() {
                   autoComplete="family-name"
                 />
                 </FormControl>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
               <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
                 <TextField
@@ -130,6 +155,7 @@ export default function Register() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={e => setEmail(e.target.value)}
                 />
                 </FormControl>
 
@@ -176,14 +202,18 @@ export default function Register() {
                
               </Grid>
             </Grid>
+            <Link href="/Login" variant="body2">
             <Button
               type="submit"
               fullWidth
               variant="contained"
+              onClick={register}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
             </Button>
+            </Link>
+
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/Login" variant="body2">

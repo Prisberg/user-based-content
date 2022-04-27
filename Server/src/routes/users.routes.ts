@@ -54,6 +54,9 @@ usersRouter.get('/:id', async (req, res) => {
   }
 })
 
+usersRouter.get('/', async (req, res) => {
+  res.send(req.user);
+})
 export default usersRouter;
 
 
