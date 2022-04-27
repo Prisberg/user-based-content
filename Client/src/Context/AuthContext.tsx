@@ -1,31 +1,29 @@
-import { createContext, ReactChild, ReactFragment, ReactPortal, useEffect, useReducer } from "react";
-import AuthReducer from "./AuthReducer";
-const DEFAULT_STATE = {
-  user: null,
-  isFetching: false,
-  err: false
-};
+import React, { useContext, useState, useEffect, createContext } from "react";
+import axios from "axios";
 
-export const AuthContext = createContext(DEFAULT_STATE);
+const APIContext = createContext({});
 
-export const AuthContextProvider = (props: {children: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined;}) => {
-  const [state, dispatch] = useReducer(AuthReducer, DEFAULT_STATE, () =>{
-    const localBasketData = localStorage.getItem('user');
-    return localBasketData ? JSON.parse(localBasketData) : DEFAULT_STATE;
-
-  });
-  useEffect(()=>{
-    localStorage.setItem("user", JSON.stringify(state.user))
-  },[state.user])
+export function APIContextProvider(props: { children: any }) {
+  const [user, setUser] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await axios.get(
+        `http://localhost:4000/user`
+      );
+      console.log(data);
+      setUser(data);
+    }
+    fetchData();
+  }, []);
   return (
-    <AuthContext.Provider
-    value={{
-      user: state.user,
-      isFetching: state.isFetching,
-      err: state.err,
-      
-    }}>
-      {props.children}
-    </AuthContext.Provider>
-  )
+    <APIContext.Provider value={user!}>{props.children}</APIContext.Provider>
+  );
+}
+
+export function useAPI() {
+  const context = useContext(APIContext);
+  if (context === undefined) {
+    throw new Error("Context must be used within a Provider");
+  }
+  return context;
 }
