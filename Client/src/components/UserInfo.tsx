@@ -55,6 +55,8 @@ const UserInfo = () => {
             <Box>
                 <Box sx={profile}>
                 <Typography sx={profileText}>
+                {ctx?.username}
+
                 </Typography>
                 <Avatar />
                 </Box>

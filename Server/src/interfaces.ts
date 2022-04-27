@@ -1,4 +1,5 @@
 export interface UserInterface  {
+  username: string;
   email: string;
   isAdmin: boolean;
   id: string;
@@ -13,6 +14,7 @@ export interface DbUserInterface {
 }
 
 export interface IPost {
+  id: string;
   userId: string;
   description: string;
   img?: string;
