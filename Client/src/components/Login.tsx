@@ -1,18 +1,30 @@
-import { AppBar, Avatar, Box, Button, Container, Drawer, FormControl, Grid, IconButton, Paper, SxProps, TextField, Toolbar, Typography } from "@mui/material";
-import { useRef, useContext } from "react";
+import { Avatar, Box, Button, Container, FormControl, Grid, SxProps, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../Context/AuthContext";
-import { loginCall } from "../apiAxios";
+// import { AuthContext } from "../Context/AuthContext";
 
+import axios, { AxiosResponse } from "axios";
 
 
 export default function Login() {
-  const email = useRef();
-  const password = useRef();
-  // const { isFetching, dispatch } = useContext(AuthContext);
-  
  
- 
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+
+  const login = async () => {
+  await axios.post("http://localhost:4000/login", {
+    email,
+    password
+  }, {
+    withCredentials: true
+  }).then((res : AxiosResponse) => {
+    if (res.data === "success") {
+     console.log("success");
+   }
+  }, () => {
+    console.log("Failure");
+  })
+}
     return (
         <Container>
             <Box 
@@ -36,9 +48,10 @@ export default function Login() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="email"
                   name="email"
                   autoComplete="email"
+                  onChange={e => setEmail(e.target.value)}
                 />
                 </FormControl>
 
@@ -52,21 +65,24 @@ export default function Login() {
                   label="Password"
                   type="password"
                   id="password"
+                  onChange={e => setPassword(e.target.value)}
                 />
                </FormControl>
               </Grid>
               <Grid   >
-            <Link to={'/'} style={{ textDecoration: 'none' }}>
+              <Link to={'/'} style={{ textDecoration: 'none' }}>
               <Button 
                 sx={button}
                 type="submit" 
                 color="primary"
                 variant="contained"
                 fullWidth
+                onClick={login}
                 >
                 Sign in
                 </Button>
                 </Link>
+
                 </Grid>
                 <Grid container justifyContent="center">
               <Grid item>
@@ -88,103 +104,3 @@ const button: SxProps = {
     width: '12rem',
     marginLeft: '4rem'
 }
-const signUp: SxProps = {
-    marginTop: '2rem',
-    marginLeft: '5rem'
-}
-
-
-
-/* function Login(){
-    
-
-    return (
-        <Box>
-        <Grid>
-            <Paper elevation={10} sx={paperStyle}>
-                <Grid sx={text}>
-                <Avatar sx={align}>
-                </Avatar>
-                SIGN IN
-                </Grid>
-                <TextField 
-                autoComplete="email"
-                label='Email' 
-                placeholder='Enter email' 
-                fullWidth 
-                required
-                autoFocus
-                sx={email}
-                />
-                <TextField 
-                label='Password' 
-                placeholder='Enter password' 
-                fullWidth 
-                required
-                sx={password}
-                />
-                <Button 
-                sx={button}
-                type="submit" 
-                color="primary"
-                variant="contained" 
-                fullWidth
-                >
-                Sign in
-                </Button>
-                <span style={{ marginTop: '2px' }}> 
-                No account?
-                <Link to={'/register'}>
-                <Button sx={signUp}>
-                    Sign up
-                </Button>
-                </Link>
-                </span>
-            </Paper>
-        </Grid>
-        </Box>
-    );
-}
-
-const paperStyle: SxProps = {
-    padding: '30px',
-    height: '70vh',
-    width: '300px',
-    margin: '100px auto',
-}
-
-const align: SxProps = {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginBottom: '1rem'
-}
-const text: SxProps = {
-    fontSize: '20px',
-    textAlign: 'center',
-}
-const email: SxProps = {
-    marginTop: '3rem'
-}
-const password: SxProps = {
-    marginTop: '3rem'
-}
-const button: SxProps = {
-    marginTop: '5rem',
-}
-const signUp: SxProps = {
-    marginTop: '2px'
-}
-const menu: SxProps = {
-    backgroundColor: '#fff'
-}
-const icon: SxProps = {
-    display: 'flex',
-    
-}
-const iconStyle: SxProps = {
-    fontSize: '3rem',
-    color: 'black'
-}
-
-export default Login;
- */
