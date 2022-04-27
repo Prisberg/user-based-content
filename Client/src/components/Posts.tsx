@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 /* Temporary posts */
 
-interface PostInfo {
+export interface PostInfo {
     id: number;
     poster: string;
     titel: string;

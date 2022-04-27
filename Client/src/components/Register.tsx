@@ -19,13 +19,13 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Visibility } from '@mui/icons-material';
 import { useState } from 'react';
 interface State {
-    username: string;
-    email: string;
-    password: string;
-    showPassword: boolean;
-  }
+  username: string;
+  email: string;
+  password: string;
+  showPassword: boolean;
+}
 
- 
+
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -54,23 +54,23 @@ export default function Register() {
       password
     }, {
       withCredentials: true
-    }).then((res : AxiosResponse) => {
+    }).then((res: AxiosResponse) => {
       if (res.data === "success") {
-       window.location.href = "/Login"
-       console.log('suc');
-       
-     }
+        window.location.href = "/Login"
+        console.log('suc');
+
+      }
     }, () => {
       console.log("Failure");
     })
   }
-    const [values, setValues] = React.useState<State>({
-            username: '',
-            email: '',
-            password: '',
-          showPassword: false,
-        });
-    
+  const [values, setValues] = React.useState<State>({
+    username: '',
+    email: '',
+    password: '',
+    showPassword: false,
+  });
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -78,15 +78,15 @@ export default function Register() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    if(!data) {
+    if (!data) {
       window.location.href = "/Login"
     }
   };
 
   const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-      setPassword(event.target.value)
-    };
+    setValues({ ...values, [prop]: event.target.value });
+    setPassword(event.target.value)
+  };
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -121,18 +121,18 @@ export default function Register() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <FormControl sx={{ m: 1, width: '25' }} variant="outlined">
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  onChange={e => setUsername(e.target.value)}
-                />
+                  <TextField
+                    autoComplete="given-name"
+                    name="firstName"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                    onChange={e => setUsername(e.target.value)}
+                  />
 
-                  </FormControl>
+                </FormControl>
               </Grid>
               {/* <Grid item xs={12} sm={6}>
                 <FormControl sx={{ m: 1, width: '25' }} variant="outlined">
@@ -147,71 +147,71 @@ export default function Register() {
                 </FormControl>
               </Grid> */}
               <Grid item xs={12}>
-              <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={e => setEmail(e.target.value)}
-                />
+                <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
+                  <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    onChange={e => setEmail(e.target.value)}
+                  />
                 </FormControl>
 
               </Grid>
               <Grid item xs={12}>
-              <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                <OutlinedInput
-                id="outlined-adornment-password"
-                type={values.showPassword ? 'text' : 'password'}
-                value={values.password}
-                onChange={handleChange('password')}
-                endAdornment={
-                <InputAdornment position="end">
-                    <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                    >
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
+                <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChange('password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
-              <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Confirm Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-               </FormControl>
+                <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="Confirm Password"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                  />
+                </FormControl>
 
               </Grid>
               <Grid item xs={12}>
-               
+
               </Grid>
             </Grid>
             <Link href="/Login" variant="body2">
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              onClick={register}
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                onClick={register}
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
             </Link>
 
             <Grid container justifyContent="flex-end">

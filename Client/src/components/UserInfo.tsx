@@ -6,7 +6,12 @@ import { ReactChild, ReactFragment, ReactPortal, MouseEventHandler } from 'react
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
+
+import { posts } from "./Posts";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
 import { APIContext } from "../Context/AuthContext";
+
 
 
 interface AppBarProps extends MuiAppBarProps {
@@ -24,11 +29,18 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 
-const UserInfo = () => {
+
+const UserInfo: React.FC<Props> = () => {
+
+    const [postValue, setPostValue] = useState('')
+
+
+    const [open, setOpen] = React.useState(false);
+
+
     const ctx = useContext(APIContext);
     console.log(ctx);
-    
-    const [open, setOpen] = useState(false);
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -49,6 +61,13 @@ const UserInfo = () => {
         drawerHeight = '100%'
     }
 
+    const handleChange = (e: { target: { value: any; }; }) => {
+        setPostValue(e.target.value);
+    };
+
+    const handleCreatePost = () => {
+        console.log(postValue)
+    }
 
     return (
         <Container>
@@ -93,52 +112,138 @@ const UserInfo = () => {
                 <CloseIcon sx={iconStyle} />
                 </IconButton>
                 </DrawerHeader>
+                    <Typography sx={profileText}>
+                        User Profile
+                    </Typography>
+                    <Avatar />
 
-
+          
+                </Box>
                 
-                <TextField>
 
-                </TextField>
+                {/*                 <Drawer
+                    sx={{
+                        position: 'absolute',
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                            marginTop: '10rem',
+                            marginRight: '20rem',
+                            width: { xs: drawerWidth, sm: '50%', md: '50%', lg: '50%' },
+                            height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
+                            backgroundColor: '#fff',
+                            borderRadius: '20px'
+                        },
+                    }}
+                    variant="persistent"
+                    anchor="right"
+                    open={open}
+                >
+                    <DrawerHeader>
+                        <IconButton onClick={handleDrawerClose}>
+                            <CloseIcon sx={iconStyle} />
+                        </IconButton>
+                        <Typography sx={editText}>Edit post</Typography>
+                    </DrawerHeader>
 
 
 
+                    <TextField sx={editField} variant="standard">
+
+                    </TextField>
+
+                    <Button type="submit" sx={confirmBtn}>Confirm</Button>
+
+                </Drawer> */}
+                <Button>
+                    <PersonRemoveIcon onClick={handleDrawerOpen}
+                        sx={{ ...(open && { display: '' }), fontSize: '3rem', marginTop: '1rem', color: 'red' }} />
+                </Button>
+                <Typography>Delete User</Typography>
+                <Drawer
+                    sx={{
+                        position: 'absolute',
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                            marginTop: '10rem',
+                            marginRight:{ xs: '1.5rem', sm: '8rem', lg:'20rem' },
+                            width: { xs: '90%', sm: '50%', md: '50%', lg: '50%' },
+                            height: { xs: '50%', sm: '50%', md: '40%', lg: '40%' },
+                            backgroundColor: '#ECECEC',
+                            borderRadius: '20px'
+                        },
+                    }}
+                    variant="persistent"
+                    anchor="right"
+                    open={open}
+                >
+                    <DrawerHeader >
+                        <IconButton onClick={handleDrawerClose}>
+                            <CloseIcon sx={iconStyle} />
+                        </IconButton>
+                        <Typography sx={editText}>Are you sure you want to delete this account?</Typography>
+                    </DrawerHeader>
+                    <Button type="button" sx={confirmBtn} onClick={() => {handleDrawerClose();}}>No</Button>
+                    <Button type="button" sx={confirmBtn} onClick={() => {console.log('deleted user')}}>Yes</Button>
                 </Drawer>
 
-
-
-                <Button>
-                <PersonRemoveIcon sx={deleteIcon}/>
-                </Button>
+                <Box>
+                    <Typography sx={userText}>Create Post</Typography>
+                    <TextField
+                        
+                        fullWidth
+                        multiline
+                        rows={4}
+                        value={postValue}
+                        onChange={handleChange} />
+                    <Button
+                        onClick={() => { handleCreatePost(); }}
+                        type='submit'
+                        sx={button}>
+                        Submit Post
+                    </Button>
+                </Box>
 
                 <Box>
-                <Typography sx={userText}>User Info</Typography>
-                <Paper sx={userInfo}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt maiores ducimus quisquam? Doloribus tenetur, ipsum cum molestias omnis dolorum, illum eligendi odio facere assumenda et repellendus officiis repellat, cumque est!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt maiores ducimus quisquam? Doloribus tenetur, ipsum cum molestias omnis dolorum, illum eligendi odio facere assumenda et repellendus officiis repellat, cumque est!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt maiores ducimus quisquam? Doloribus tenetur, ipsum cum molestias omnis dolorum, illum eligendi odio facere assumenda et repellendus officiis repellat, cumque est!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt maiores ducimus quisquam? Doloribus tenetur, ipsum cum molestias omnis dolorum, illum eligendi odio facere assumenda et repellendus officiis repellat, cumque est!
-                </Paper>
+                    <Typography sx={text}>Your Posts</Typography>
+                    {posts.map((posts) => (
+                        <Paper key={posts.id} sx={newPost}>
+                            <Button sx={deleteBtn}>
+                                <DeleteForeverIcon />
+                            </Button>
+                            <Button>
+                            <EditIcon
+                            sx={editIcon} />
+                            </Button>
+                            <Typography >
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus quis eligendi sit numquam odit corporis, quasi, veniam quibusdam harum laborum rerum nisi asperiores unde hic! Alias atque tempore cumque id!
+                            </Typography>
+                        </Paper>
+                    ))}
                 </Box>
-
-                <Box>
-                    <Typography sx={text}>Newest Post</Typography>
-                    <Paper sx={newPost}>
-                    <Typography >
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus quis eligendi sit numquam odit corporis, quasi, veniam quibusdam harum laborum rerum nisi asperiores unde hic! Alias atque tempore cumque id!
-                    </Typography>
-                    </Paper>
-                </Box>
-                <Box sx={buttonAlign}>
-                <Button sx={button}>All Posts</Button>
-                </Box>
-
             </Box>
         </Container>
     );
 }
 
-const edit: SxProps = {
-    
+const confirmBtn: SxProps = {
+    backgroundColor: '#A1BFED',
+    color: 'black',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '1rem',
+    width: '5rem'
+}
+const deleteBtn: SxProps = {
+    float: 'right',
+    color: 'red'
+}
+
+const drawer: SxProps = {
+    backgroundColor: '#D3D3D3'
+}
+const editText: SxProps = {
+    fontSize: '2rem',
+    marginLeft: '2rem',
 }
 const userInfo: SxProps = {
     backgroundColor: '#E5E5E5',
@@ -174,15 +279,7 @@ const profileText: SxProps = {
 }
 const editIcon: SxProps = {
     cursor: 'pointer',
-    marginTop: '1rem',
-    marginRight: '1rem',
-    fontSize: '2rem',
-    color: 'blue'
-}
-const deleteIcon: SxProps = {
-    marginTop: '1rem',
-    fontSize: '2rem',
-    color: 'red'
+    color: 'blue',
 }
 const buttonAlign: SxProps = {
     display: 'flex',
@@ -190,11 +287,12 @@ const buttonAlign: SxProps = {
 }
 const button: SxProps = {
     backgroundColor: '#A1BFED',
-    fontSize: '2rem',
-    color: 'black', 
-    width: '15rem',
-    height: '6rem',
-    marginBottom: '2rem'
+    fontSize: '1rem',
+    color: 'black',
+    width: '10rem',
+    height: '3rem',
+    marginBottom: '2rem',
+    float: 'right'
 }
 const iconStyle: SxProps = {
     fontSize: '2rem',

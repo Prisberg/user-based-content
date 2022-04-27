@@ -21,7 +21,8 @@ export default function Login() {
     if (res.data === "success") {
      console.log("success");
      window.location.href = "/user"
-   }
+     /* TEMPORARY? */
+       }
   }, () => {
     console.log("Failure");
   })
