@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, createContext } from "react";
 import axios from "axios";
 
-const APIContext = createContext({});
+export const APIContext = createContext({});
 
 export function APIContextProvider(props: { children: any }) {
   const [user, setUser] = useState([]);

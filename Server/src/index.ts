@@ -42,6 +42,11 @@ routes.use('/posts', postsRouter)
 routes.use('/user', usersRouter)
 
 
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.send("success")
+});
+
 app.listen(Port, () => {
   console.log("Server Started");
 });
