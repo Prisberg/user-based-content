@@ -9,7 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom";
 import Axios, { AxiosResponse } from "axios";
 
-import { APIContext } from '../Context/AuthContext'
+// import { APIContext } from '../Context/AuthContext'
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -28,7 +28,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 const Menu: React.FC<Props> = () => {
-    const ctx = useContext(APIContext);
+    // const ctx = useContext(APIContext);
     const logout = () => {
         Axios.get("http://localhost:4000/logout", {
           withCredentials: true

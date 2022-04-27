@@ -1,3 +1,24 @@
+
+// import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
+// import Axios, { AxiosResponse } from 'axios'
+// import { UserInterface } from '../Interface'
+
+// export const myContext = createContext<Partial<UserInterface>>({})
+// export default function Context(props: PropsWithChildren<any>) {
+//   const [user,setUser] = useState<UserInterface>()
+//   useEffect(() => {
+//     Axios.get("http://localhost:4000/user", { withCredentials: true }).then((res: AxiosResponse) => {
+//       setUser(res.data);
+//       console.log(res.data);
+      
+//     })
+//   }, []);
+
+//   return (
+//     <myContext.Provider value={user}>{props.children}</myContext.Provider>
+//     )
+// }
+
 import React, { useContext, useState, useEffect, createContext } from "react";
 import axios from "axios";
 
@@ -16,7 +37,7 @@ export function APIContextProvider(props: { children: any }) {
     fetchData();
   }, []);
   return (
-    <APIContext.Provider value={user!}>{props.children}</APIContext.Provider>
+    <APIContext.Provider value={user}>{props.children}</APIContext.Provider>
   );
 }
 
@@ -27,3 +48,5 @@ export function useAPI() {
   }
   return context;
 }
+
+
