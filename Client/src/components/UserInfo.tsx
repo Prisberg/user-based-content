@@ -61,7 +61,7 @@ const UserInfo: React.FC<Props> = () => {
                 </Box>
                 <Tooltip 
                 title="Edit"
-                sx={edit}
+            
                 >
                 <Button onClick={handleDrawerOpen}
                     sx={{ ...(open && { display: '' }) }}>
@@ -77,7 +77,7 @@ const UserInfo: React.FC<Props> = () => {
                     '& .MuiDrawer-paper': {
                     marginTop: '10rem',
                     marginRight: '20rem',
-                    width: { xs: drawerWidth, sm: '35%', md: '25%', lg: '50%' },
+                    width: { xs: drawerWidth, sm: '50%', md: '50%', lg: '50%' },
                     height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
                     backgroundColor: '#fff',
                     borderRadius: '20px'
@@ -91,15 +91,16 @@ const UserInfo: React.FC<Props> = () => {
                 <IconButton onClick={handleDrawerClose}>
                 <CloseIcon sx={iconStyle} />
                 </IconButton>
+                <Typography sx={editText}>Edit post</Typography>
                 </DrawerHeader>
 
 
                 
-                <TextField>
+                <TextField sx={editField} variant="standard">
 
                 </TextField>
 
-
+                <Button sx={confirmBtn}>Confirm</Button>
 
                 </Drawer>
 
@@ -110,7 +111,7 @@ const UserInfo: React.FC<Props> = () => {
                 </Button>
 
                 <Box>
-                <Typography sx={userText}>User Info</Typography>
+                <Typography sx={userText}>User Post</Typography>
                 <Paper sx={userInfo}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt maiores ducimus quisquam? Doloribus tenetur, ipsum cum molestias omnis dolorum, illum eligendi odio facere assumenda et repellendus officiis repellat, cumque est!
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt maiores ducimus quisquam? Doloribus tenetur, ipsum cum molestias omnis dolorum, illum eligendi odio facere assumenda et repellendus officiis repellat, cumque est!
@@ -136,8 +137,21 @@ const UserInfo: React.FC<Props> = () => {
     );
 }
 
-const edit: SxProps = {
-    
+const confirmBtn: SxProps = {
+    backgroundColor: '#A1BFED',
+    color: 'black',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '7rem',
+    width: '5rem'
+
+}
+const editText: SxProps = {
+    fontSize: '2rem',
+    marginLeft: '2rem',
+}
+const editField: SxProps = {
+    marginTop: '4rem'
 }
 const userInfo: SxProps = {
     backgroundColor: '#E5E5E5',
