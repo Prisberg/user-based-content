@@ -28,9 +28,27 @@ usersRouter.put('/:id', async (req :Request, res:Response) => {
         }
 })
 
-usersRouter.get('/',  (req :Request, res:Response) => {
-  res.send(req.user);
-  
+usersRouter.get('/',  async (req :Request, res:Response) => {
+  // const userId = req.query.userId;
+  // const email = req.query.email;
+  // try {
+  //   const user = userId
+  //     ? await User.findById(userId)
+  //     : await User.findOne({ email: email });
+  //   const { password, updatedAt, ...other } = user._doc;
+  //   res.status(200).json(other);
+  // } catch (err) {
+  //   res.status(500).json(err);
+  // }
+  // const users = User.find((err: any, users: any) => {
+  //   console.log(users);
+    
+  //   if (err) {
+  //     res.send("Error!");
+  //   } else {
+  //     res.send(users);
+  //   }
+  // });
 })
 
 //  Delete user
