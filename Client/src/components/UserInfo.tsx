@@ -75,6 +75,9 @@ const UserInfo: React.FC<Props> = () => {
         <Container>
             <Box>
                 <Box sx={profile}>
+                <Typography sx={profileText}>
+                {ctx?.username}
+
                 </Typography>
                 <Avatar />
                 </Box>
@@ -111,7 +114,6 @@ const UserInfo: React.FC<Props> = () => {
                 <CloseIcon sx={iconStyle} />
                 </IconButton>
                 </DrawerHeader>
-
                     <Typography sx={profileText}>
                         User Profile
                     </Typography>
