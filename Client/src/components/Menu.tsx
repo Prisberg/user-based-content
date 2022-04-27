@@ -86,7 +86,7 @@ const Menu: React.FC<Props> = () => {
                 marginTop: '5rem',
                 
                 width: { xs: drawerWidth, sm: '35%', md: '25%', lg: '18%' },
-                height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
+                height: { xs: drawerWidth, sm: '50%', md: '50%', lg: '50%' },
                 backgroundColor: '#E5E5E5',
                 borderRadius: '20px'
 
@@ -104,6 +104,12 @@ const Menu: React.FC<Props> = () => {
         <Box >
         <Link to={'/'} style={{ textDecoration: 'none' }}>
         <Button type="submit" variant='text'  sx={homeButton}> <HomeIcon sx={loginIcon} /> Home</Button>
+        </Link>
+        </Box>
+        <br />
+        <Box >
+        <Link to={'/user'} style={{ textDecoration: 'none' }}>
+        <Button type="submit" variant='text'  sx={homeButton}> <Avatar sx={loginIcon} /> User</Button>
         </Link>
         </Box>
         <br />
