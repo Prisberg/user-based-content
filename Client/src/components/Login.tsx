@@ -14,7 +14,6 @@ interface State {
 }
 
 export default function Login() {
-
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
 
@@ -27,24 +26,15 @@ export default function Login() {
   const login =  () => {
    axios.post("http://localhost:4000/login", {
     username,
-
- 
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
-
-  const login = async () => {
-  await axios.post("http://localhost:4000/login", {
-    email,
-
     password
   }, {
     withCredentials: true
   }).then((res : AxiosResponse) => {
     if (res.data === "success") {
      console.log("success");
+     window.location.href = "/user"
      /* TEMPORARY? */
-     
-   }
+       }
   }, () => {
     console.log("Failure");
   })
@@ -81,17 +71,17 @@ const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputE
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="email"
-                  name="email"
-                  autoComplete="email"
-                  onChange={e => setEmail(e.target.value)}
+                  id="username"
+                  label="username"
+                  name="username"
+                  autoComplete="username"
+                  onChange={e => setUsername(e.target.value)}
                 />
                 </FormControl>
 
               </Grid>
               <Grid item xs={12}>
-                <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
+                <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
