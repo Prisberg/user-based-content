@@ -6,12 +6,13 @@ import AdminPage from "./components/AdminPage";
 import Register from "./components/Register";
 import Menu from "./components/Menu";
 import UserInfo from "./components/UserInfo";
-import  APIContextProvider  from "./Context/AuthContext";
+import { APIContextProvider } from "./Context/AuthContext";
 
 function App() {
   return (
     <BrowserRouter>
       <ErrorBoundary>
+    <APIContextProvider>
       <Menu/>
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -21,6 +22,7 @@ function App() {
         <Route path="user" element={<UserInfo />} />
         <Route path="*" element={<div>Invalid URL, sorry.</div>} />
       </Routes>
+    </APIContextProvider>
       </ErrorBoundary>
     </BrowserRouter>
   );
