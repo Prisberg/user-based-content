@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import LoginIcon from '@mui/icons-material/Login';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
 import { Link } from "react-router-dom";
 import Axios, { AxiosResponse } from "axios";
 
@@ -73,7 +74,7 @@ const Menu: React.FC<Props> = () => {
                     sx={home}
                     // sx={{ mt: 3, mb: 2 }}
                     >
-                    Home
+                    POST
                     </Button>
                     </Link>
                     </Typography>
@@ -122,7 +123,7 @@ const Menu: React.FC<Props> = () => {
 
         <Box >
         <Link to={'/user'} style={{ textDecoration: 'none' }}>
-        <Button type="submit" variant='text'  sx={homeButton}> <Avatar sx={loginIcon} /> User</Button>
+        <Button type="submit" variant='text'  sx={button}> <PersonIcon sx={loginIcon} /> User</Button>
         </Link>
         </Box>
         <br />
@@ -138,9 +139,8 @@ const Menu: React.FC<Props> = () => {
                 <Button type="submit" variant='text' sx={button}> <AssignmentIndIcon sx={loginIcon} />Register</Button>
             </Link>
         </Box>
-        </>
-        )
-       }
+        
+       
         </Drawer>
       
         </Box>

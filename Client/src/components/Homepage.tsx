@@ -26,7 +26,6 @@ const h1Style: SxProps = {
 }
 
 const boxStyle: SxProps = {
-    backgroundColor: 'white',
     padding: '2rem',
     height: '100%',
     maxWidth: '100%',
