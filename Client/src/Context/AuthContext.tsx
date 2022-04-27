@@ -1,7 +1,7 @@
 
 import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
 import Axios, { AxiosResponse } from 'axios'
-import { UserInterface } from '../Interface'
+import { UserInterface } from '../interface'
 
 export const APIContext = createContext<any>({})
 export default function Context(props: PropsWithChildren<any>) {

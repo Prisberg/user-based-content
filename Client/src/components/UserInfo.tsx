@@ -7,10 +7,12 @@ import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
 
-import { posts } from "./Posts";
+// import { posts } from "./Posts";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import { APIContext } from "../Context/AuthContext";
+import edit from "material-ui/svg-icons/image/edit";
+import React from "react";
 
 
 
@@ -81,7 +83,7 @@ const UserInfo: React.FC<Props> = () => {
                 </Box>
                 <Tooltip 
                 title="Edit"
-                sx={edit}
+                // sx={edit}
                 >
                 <Button onClick={handleDrawerOpen}
                     sx={{ ...(open && { display: '' }) }}>
@@ -117,11 +119,11 @@ const UserInfo: React.FC<Props> = () => {
                     </Typography>
                     <Avatar />
 
-          
+                    </Drawer> 
                 </Box>
-                
+               
 
-                {/*                 <Drawer
+               <Drawer
                     sx={{
                         position: 'absolute',
                         flexShrink: 0,
@@ -147,13 +149,13 @@ const UserInfo: React.FC<Props> = () => {
 
 
 
-                    <TextField sx={editField} variant="standard">
+                    <TextField  variant="standard">
 
                     </TextField>
 
                     <Button type="submit" sx={confirmBtn}>Confirm</Button>
 
-                </Drawer> */}
+                </Drawer> 
                 <Button>
                     <PersonRemoveIcon onClick={handleDrawerOpen}
                         sx={{ ...(open && { display: '' }), fontSize: '3rem', marginTop: '1rem', color: 'red' }} />
@@ -203,7 +205,7 @@ const UserInfo: React.FC<Props> = () => {
                     </Button>
                 </Box>
 
-                <Box>
+                {/* <Box>
                     <Typography sx={text}>Your Posts</Typography>
                     {posts.map((posts) => (
                         <Paper key={posts.id} sx={newPost}>
@@ -219,8 +221,7 @@ const UserInfo: React.FC<Props> = () => {
                             </Typography>
                         </Paper>
                     ))}
-                </Box>
-            </Box>
+                </Box> */}
         </Container>
     );
 }
