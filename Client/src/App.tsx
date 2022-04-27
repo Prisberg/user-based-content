@@ -10,9 +10,9 @@ import { APIContextProvider } from "./Context/AuthContext";
 
 function App() {
   return (
-    <APIContextProvider>
     <BrowserRouter>
       <ErrorBoundary>
+    <APIContextProvider>
       <Menu/>
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -22,9 +22,9 @@ function App() {
         <Route path="user" element={<UserInfo />} />
         <Route path="*" element={<div>Invalid URL, sorry.</div>} />
       </Routes>
+    </APIContextProvider>
       </ErrorBoundary>
     </BrowserRouter>
-    </APIContextProvider>
   );
 }
 
