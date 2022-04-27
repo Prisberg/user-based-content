@@ -72,7 +72,7 @@ export default function Login() {
                </FormControl>
               </Grid>
               <Grid   >
-              <Link to={'/'} style={{ textDecoration: 'none' }}>
+              <Link to={'/user'} style={{ textDecoration: 'none' }}>
               <Button 
                 sx={button}
                 type="submit" 

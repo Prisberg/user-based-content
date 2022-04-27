@@ -1,13 +1,17 @@
 import { Avatar, Box, Button, Container, Drawer, Grid, IconButton, Paper, SxProps, TextField, Tooltip, Typography, } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-import { useState } from "react";
-import React from "react";
+import { useContext, useState } from "react";
+import { ReactChild, ReactFragment, ReactPortal, MouseEventHandler } from 'react';
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
+
 import { posts } from "./Posts";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
+import { APIContext } from "../Context/AuthContext";
+
 
 
 interface AppBarProps extends MuiAppBarProps {
@@ -21,10 +25,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-
-
     justifyContent: 'flex-start',
 }));
+
 
 
 const UserInfo: React.FC<Props> = () => {
@@ -33,6 +36,11 @@ const UserInfo: React.FC<Props> = () => {
 
 
     const [open, setOpen] = React.useState(false);
+
+
+    const ctx = useContext(APIContext);
+    console.log(ctx);
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -65,10 +73,13 @@ const UserInfo: React.FC<Props> = () => {
         <Container>
             <Box>
                 <Box sx={profile}>
+
                     <Typography sx={profileText}>
                         User Profile
                     </Typography>
                     <Avatar />
+
+          
                 </Box>
                 
 

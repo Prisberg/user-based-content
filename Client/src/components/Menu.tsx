@@ -10,7 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { Link } from "react-router-dom";
 import Axios, { AxiosResponse } from "axios";
 
-import { APIContext } from '../Context/AuthContext'
+// import { APIContext } from '../Context/AuthContext'
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -19,8 +19,6 @@ interface Props {
 
 }
 
-
-  
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -31,7 +29,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 const Menu: React.FC<Props> = () => {
-    const ctx = useContext(APIContext);
+    // const ctx = useContext(APIContext);
     const logout = () => {
         Axios.get("http://localhost:4000/logout", {
           withCredentials: true
@@ -139,13 +137,12 @@ const Menu: React.FC<Props> = () => {
                 <Button type="submit" variant='text' sx={button}> <AssignmentIndIcon sx={loginIcon} />Register</Button>
             </Link>
         </Box>
-        
-       
+               
         </Drawer>
-      
         </Box>
     );
 }
+
 const button: SxProps = {
     fontSize:'1.5rem'
 }

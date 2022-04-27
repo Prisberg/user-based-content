@@ -10,21 +10,21 @@ import { APIContextProvider } from "./Context/AuthContext";
 
 function App() {
   return (
+    <BrowserRouter>
+      <ErrorBoundary>
     <APIContextProvider>
-      <BrowserRouter>
-        <Menu />
-        <ErrorBoundary>
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="register" element={<Register />} />
-            <Route path="login" element={<Login />} />
-            <Route path="user" element={<UserInfo />} />
-            <Route path="*" element={<div>Invalid URL, sorry.</div>} />
-          </Routes>
-        </ErrorBoundary>
-      </BrowserRouter>
+      <Menu/>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+        <Route path="user" element={<UserInfo />} />
+        <Route path="*" element={<div>Invalid URL, sorry.</div>} />
+      </Routes>
     </APIContextProvider>
+      </ErrorBoundary>
+    </BrowserRouter>
   );
 }
 
