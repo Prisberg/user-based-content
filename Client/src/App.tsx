@@ -6,9 +6,11 @@ import AdminPage from "./components/AdminPage";
 import Register from "./components/Register";
 import Menu from "./components/Menu";
 import UserInfo from "./components/UserInfo";
+import { APIContextProvider } from "./Context/AuthContext";
 
 function App() {
   return (
+    <APIContextProvider>
     <BrowserRouter>
       <ErrorBoundary>
       <Menu/>
@@ -22,6 +24,7 @@ function App() {
       </Routes>
       </ErrorBoundary>
     </BrowserRouter>
+    </APIContextProvider>
   );
 }
 

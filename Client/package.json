@@ -21,6 +21,7 @@
     "ejs": "^3.1.7",
     "express": "^4.17.3",
     "formik": "^2.2.9",
+    "node-polyfill-webpack-plugin": "^1.1.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
@@ -56,6 +57,5 @@
   "devDependencies": {
     "dotenv": "^16.0.0",
     "nodemon": "^2.0.15"
-  },
-  "proxy": "http://localhost:3000/api"
+  }
 }
