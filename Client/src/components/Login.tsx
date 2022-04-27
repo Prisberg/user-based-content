@@ -1,12 +1,33 @@
-import { Avatar, Box, Button, Container, FormControl, Grid, SxProps, TextField, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, SxProps, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // import { AuthContext } from "../Context/AuthContext";
 
 import axios, { AxiosResponse } from "axios";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import React from "react";
 
+interface State {
+  username: string;
+  password: string;
+  showPassword: boolean;
+}
 
 export default function Login() {
+
+  const [username, setUsername] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+
+  const [values, setValues] = React.useState<State>({
+    username: '',
+    password: '',
+    showPassword: false,
+  });
+
+  const login =  () => {
+   axios.post("http://localhost:4000/login", {
+    username,
+
  
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -14,6 +35,7 @@ export default function Login() {
   const login = async () => {
   await axios.post("http://localhost:4000/login", {
     email,
+
     password
   }, {
     withCredentials: true
@@ -27,6 +49,16 @@ export default function Login() {
     console.log("Failure");
   })
 }
+const handleClickShowPassword = () => {
+  setValues({
+    ...values,
+    showPassword: !values.showPassword,
+  });
+};
+const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  setValues({ ...values, [prop]: event.target.value });
+  setPassword(event.target.value)
+};
     return (
         <Container>
             <Box 
@@ -58,18 +90,28 @@ export default function Login() {
                 </FormControl>
 
               </Grid>
-              <Grid item  >
-              <FormControl sx={{ m: 1, mt: 3 , width: '30ch' }} variant="outlined">
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  onChange={e => setPassword(e.target.value)}
-                />
-               </FormControl>
+              <Grid item xs={12}>
+                <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChange('password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
               </Grid>
               <Grid   >
               <Link to={'/user'} style={{ textDecoration: 'none' }}>

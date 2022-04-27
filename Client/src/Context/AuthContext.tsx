@@ -1,7 +1,13 @@
 
+
+import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
+import Axios, { AxiosResponse } from 'axios'
+import { UserInterface } from '../interface'
+
 // import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
 // import Axios, { AxiosResponse } from 'axios'
 // import { UserInterface } from '../Interface'
+
 
 // export const myContext = createContext<Partial<UserInterface>>({})
 // export default function Context(props: PropsWithChildren<any>) {

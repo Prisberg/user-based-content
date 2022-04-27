@@ -120,32 +120,20 @@ export default function Register() {
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <FormControl sx={{ m: 1, width: '25' }} variant="outlined">
+                <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
                   <TextField
                     autoComplete="given-name"
-                    name="firstName"
+                    name="userName"
                     required
                     fullWidth
-                    id="firstName"
-                    label="First Name"
+                    id="userName"
+                    label="User Name"
                     autoFocus
                     onChange={e => setUsername(e.target.value)}
                   />
 
                 </FormControl>
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
-                <FormControl sx={{ m: 1, width: '25' }} variant="outlined">
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-                </FormControl>
-              </Grid> */}
               <Grid item xs={12}>
                 <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
                   <TextField
