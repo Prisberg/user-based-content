@@ -8,21 +8,21 @@ import axios, { AxiosResponse } from "axios";
 
 export default function Login() {
  
-  const [username, setUsername] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
 
-  const login =  () => {
-   axios.post("http://localhost:4000/login", {
-    username,
+  const login = async () => {
+  await axios.post("http://localhost:4000/login", {
+    email,
     password
   }, {
     withCredentials: true
   }).then((res : AxiosResponse) => {
     if (res.data === "success") {
      console.log("success");
-     window.location.href = "/user"
      /* TEMPORARY? */
-       }
+     
+   }
   }, () => {
     console.log("Failure");
   })
@@ -49,11 +49,11 @@ export default function Login() {
                 <TextField
                   required
                   fullWidth
-                  id="username"
-                  label="username"
-                  name="username"
-                  autoComplete="username"
-                  onChange={e => setUsername(e.target.value)}
+                  id="email"
+                  label="email"
+                  name="email"
+                  autoComplete="email"
+                  onChange={e => setEmail(e.target.value)}
                 />
                 </FormControl>
 

@@ -73,45 +73,7 @@ const UserInfo: React.FC<Props> = () => {
         <Container>
             <Box>
                 <Box sx={profile}>
-                <Typography sx={profileText}>
-                {ctx?.username}
 
-                </Typography>
-                <Avatar />
-                </Box>
-                <Tooltip 
-                title="Edit"
-                sx={edit}
-                >
-                <Button onClick={handleDrawerOpen}
-                    sx={{ ...(open && { display: '' }) }}>
-                <EditIcon 
-                sx={editIcon}/>
-                </Button>
-                </Tooltip>
-
-                <Drawer
-                sx={{
-                position: 'absolute',
-                flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                    marginTop: '10rem',
-                    marginRight: '20rem',
-                    width: { xs: drawerWidth, sm: '35%', md: '25%', lg: '50%' },
-                    height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
-                    backgroundColor: '#fff',
-                    borderRadius: '20px'
-                    },
-                }}
-                variant="persistent"
-                anchor="right"
-                open={open}
-                > 
-                 <DrawerHeader>
-                <IconButton onClick={handleDrawerClose}>
-                <CloseIcon sx={iconStyle} />
-                </IconButton>
-                </DrawerHeader>
                     <Typography sx={profileText}>
                         User Profile
                     </Typography>
