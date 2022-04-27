@@ -1,17 +1,6 @@
-import { Box, Card, Grid, Paper, SxProps, Typography } from "@mui/material";
+import { Box, Paper, SxProps, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
-
-
-export interface PostInfo {
-    id: number;
-    poster: string;
-    titel: string;
-    content: string;
-}
-
-
 
 function PostsFeed() {
     const [posts, setPosts] = useState([]);
@@ -28,7 +17,7 @@ console.log(posts);
 
     return (
         <Box sx={boxStyle}>
-            {posts.map((post) => (
+            {posts.map((post: any) => (
                 <Box sx={postStyle} key={post._id}>
                     <Paper elevation={3} sx={contentPaperStyle}>
                         <Box sx={contentStyle}>
