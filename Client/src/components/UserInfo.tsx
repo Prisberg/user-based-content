@@ -6,11 +6,10 @@ import { ReactChild, ReactFragment, ReactPortal, MouseEventHandler } from 'react
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
-
 import { posts } from "./Posts";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
 import { APIContext } from "../Context/AuthContext";
+import React from "react";
 
 
 
