@@ -6,18 +6,9 @@ import { ReactChild, ReactFragment, ReactPortal, MouseEventHandler } from 'react
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
-<<<<<<< HEAD
-import { posts } from "./Posts";
-=======
-
-// import { posts } from "./Posts";
->>>>>>> cf7cfab62791993c773c76e5883f0651449c786a
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { APIContext } from "../Context/AuthContext";
-<<<<<<< HEAD
-=======
 import edit from "material-ui/svg-icons/image/edit";
->>>>>>> cf7cfab62791993c773c76e5883f0651449c786a
 import React from "react";
 import axios from "axios";
 
