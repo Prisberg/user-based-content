@@ -1,6 +1,4 @@
 import express, { Request, Response, Router  } from 'express';
-import bcrypt from 'bcryptjs';
-import postSchema  from '../models/posts'
 import Post from '../models/posts';
 
 
