@@ -21,13 +21,13 @@ const h1Style: SxProps = {
     color: '#333',
     fontSize: { xs: '2rem', sm: '3rem', xl: '4rem' },
     textAlign: 'center'
-  }
-  
-  const boxStyle: SxProps = {
+}
+
+const boxStyle: SxProps = {
     height: '100vh',
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column'
-  }
+}

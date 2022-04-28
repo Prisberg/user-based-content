@@ -32,8 +32,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const UserInfo: React.FC<Props> = () => {
     const [postValue, setPostValue] = useState('')
-    const [open, setOpen] = React.useState(false);
+    const [userInfo, setUserInfo] = useState('')
     const [userPosts, setUserPosts] = useState([]);
+    const [open, setOpen] = React.useState(false);
 
     const ctx = useContext(APIContext);
     console.log(ctx?.id);
@@ -60,6 +61,7 @@ const UserInfo: React.FC<Props> = () => {
 
     const handleChange = (e: { target: { value: any; }; }) => {
         setPostValue(e.target.value);
+        setUserInfo(e.target.value);
     };
 
     const handleCreatePost = () => {
@@ -75,17 +77,16 @@ const UserInfo: React.FC<Props> = () => {
     //     fetchData();
     // }, []);
     // console.log(userPosts);
-    
+
     return (
         <Container>
-            <Box>
-                <Box sx={profile}>
+            <Box sx={profile}>
                 <Typography sx={profileText}>
-                {ctx?.username}
+                    {ctx?.username}
                 </Typography>
                 <Avatar />
-                </Box>
-                <Tooltip 
+            </Box>
+            {/*                 <Tooltip 
                 title="Edit"
                 // sx={edit}
                 >
@@ -159,57 +160,62 @@ const UserInfo: React.FC<Props> = () => {
 
                     <Button type="submit" sx={confirmBtn}>Confirm</Button>
 
-                </Drawer> 
-                <Button>
-                    <PersonRemoveIcon onClick={handleDrawerOpen}
-                        sx={{ ...(open && { display: '' }), fontSize: '3rem', marginTop: '1rem', color: 'red' }} />
+                </Drawer>  */}
+            <Button>
+                <PersonRemoveIcon onClick={handleDrawerOpen}
+                    sx={{ ...(open && { display: '' }), fontSize: '3rem', marginTop: '1rem', color: 'red' }} />
+            </Button>
+            <Typography>Delete User</Typography>
+            <Drawer
+                sx={{
+                    position: 'absolute',
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        marginTop: '10rem',
+                        marginRight: { xs: '1.5rem', sm: '8rem', lg: '20rem' },
+                        width: { xs: '90%', sm: '50%', md: '50%', lg: '50%' },
+                        height: { xs: '50%', sm: '50%', md: '40%', lg: '40%' },
+                        backgroundColor: '#ECECEC',
+                        borderRadius: '20px'
+                    },
+                }}
+                variant="persistent"
+                anchor="right"
+                open={open}
+            >
+                <DrawerHeader >
+                    <IconButton onClick={handleDrawerClose}>
+                        <CloseIcon sx={iconStyle} />
+                    </IconButton>
+                    <Typography sx={editText}>Are you sure you want to delete this account?</Typography>
+                </DrawerHeader>
+                <Button type="button" sx={confirmBtn} onClick={() => { handleDrawerClose(); }}>No</Button>
+                <Button type="button" sx={confirmBtn} onClick={() => { console.log('deleted user') }}>Yes</Button>
+            </Drawer>
+            <Box>
+                <Typography sx={userText}>Your bio</Typography>
+                <TextField
+                    fullWidth
+                    multiline
+                    rows={4}
+                    value={userInfo}
+                    onChange={handleChange} />
+                <Typography sx={userText}>Create Post</Typography>
+                <TextField
+                    fullWidth
+                    multiline
+                    rows={4}
+                    value={postValue}
+                    onChange={handleChange} />
+                <Button
+                    onClick={() => { handleCreatePost(); }}
+                    type='submit'
+                    sx={button}>
+                    Submit Post
                 </Button>
-                <Typography>Delete User</Typography>
-                <Drawer
-                    sx={{
-                        position: 'absolute',
-                        flexShrink: 0,
-                        '& .MuiDrawer-paper': {
-                            marginTop: '10rem',
-                            marginRight:{ xs: '1.5rem', sm: '8rem', lg:'20rem' },
-                            width: { xs: '90%', sm: '50%', md: '50%', lg: '50%' },
-                            height: { xs: '50%', sm: '50%', md: '40%', lg: '40%' },
-                            backgroundColor: '#ECECEC',
-                            borderRadius: '20px'
-                        },
-                    }}
-                    variant="persistent"
-                    anchor="right"
-                    open={open}
-                >
-                    <DrawerHeader >
-                        <IconButton onClick={handleDrawerClose}>
-                            <CloseIcon sx={iconStyle} />
-                        </IconButton>
-                        <Typography sx={editText}>Are you sure you want to delete this account?</Typography>
-                    </DrawerHeader>
-                    <Button type="button" sx={confirmBtn} onClick={() => {handleDrawerClose();}}>No</Button>
-                    <Button type="button" sx={confirmBtn} onClick={() => {console.log('deleted user')}}>Yes</Button>
-                </Drawer>
+            </Box>
 
-                <Box>
-                    <Typography sx={userText}>Create Post</Typography>
-                    <TextField
-                        
-                        fullWidth
-                        multiline
-                        rows={4}
-                        value={postValue}
-                        onChange={handleChange} />
-                    <Button
-                        onClick={() => { handleCreatePost(); }}
-                        type='submit'
-                        sx={button}>
-                        Submit Post
-                    </Button>
-                </Box>
-
-                {/* <Box>
+            {/* <Box>
                     <Typography sx={text}>Your Posts</Typography>
                     {posts.map((posts) => (
                         <Paper key={posts.id} sx={newPost}>
