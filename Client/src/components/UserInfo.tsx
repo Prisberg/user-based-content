@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Container, Drawer, Grid, IconButton, Paper, SxProps, TextField, Tooltip, Typography, } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ReactChild, ReactFragment, ReactPortal, MouseEventHandler } from 'react';
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from "@mui/system";
@@ -19,6 +19,7 @@ import { APIContext } from "../Context/AuthContext";
 import edit from "material-ui/svg-icons/image/edit";
 >>>>>>> cf7cfab62791993c773c76e5883f0651449c786a
 import React from "react";
+import axios from "axios";
 
 
 
@@ -39,15 +40,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 const UserInfo: React.FC<Props> = () => {
-
     const [postValue, setPostValue] = useState('')
-
-
     const [open, setOpen] = React.useState(false);
-
+    const [userPosts, setUserPosts] = useState([]);
 
     const ctx = useContext(APIContext);
-    console.log(ctx);
+    console.log(ctx?.id);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -76,14 +74,23 @@ const UserInfo: React.FC<Props> = () => {
     const handleCreatePost = () => {
         console.log(postValue)
     }
-
+    useEffect(() => {
+        async function fetchData() {
+          const { data } = await axios.get(
+            `http://localhost:4000/posts + {ctx?.id}`
+          );
+          setUserPosts(data);
+        }
+        fetchData();
+    }, []);
+    console.log(userPosts);
+    
     return (
         <Container>
             <Box>
                 <Box sx={profile}>
                 <Typography sx={profileText}>
                 {ctx?.username}
-
                 </Typography>
                 <Avatar />
                 </Box>

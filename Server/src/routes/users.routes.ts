@@ -29,6 +29,7 @@ usersRouter.put('/:id', async (req :Request, res:Response) => {
 })
 
 usersRouter.get('/',  async (req :Request, res:Response) => {
+  res.send(req.user);
   // const userId = req.query.userId;
   // const email = req.query.email;
   // try {
