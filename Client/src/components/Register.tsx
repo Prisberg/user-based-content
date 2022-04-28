@@ -110,12 +110,13 @@ export default function Register() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
                   <TextField
                     autoComplete="given-name"
+                    type="tex"
                     name="userName"
                     required
                     fullWidth
