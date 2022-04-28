@@ -56,9 +56,8 @@ export default function Register() {
       withCredentials: true
     }).then((res: AxiosResponse) => {
       if (res.data === "success") {
-        window.location.href = "/Login"
         console.log('suc');
-
+        window.location.href = "/"
       }
     }, () => {
       console.log("Failure");
@@ -74,10 +73,7 @@ export default function Register() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    
     if (!data) {
       window.location.href = "/Login"
     }
@@ -172,25 +168,11 @@ export default function Register() {
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
-                <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
-                  <TextField
-                    required
-                    fullWidth
-                    name="password"
-                    label="Confirm Password"
-                    type="password"
-                    id="password"
-                    autoComplete="new-password"
-                  />
-                </FormControl>
 
-              </Grid>
               <Grid item xs={12}>
-
               </Grid>
             </Grid>
-            <Link href="/Login" variant="body2">
+            <Link href={"/Login"} variant="body2">
               <Button
                 type="submit"
                 fullWidth

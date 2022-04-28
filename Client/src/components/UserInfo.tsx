@@ -68,16 +68,16 @@ const UserInfo: React.FC<Props> = () => {
     const handleCreatePost = () => {
         console.log(postValue)
     }
-    useEffect(() => {
-        async function fetchData() {
-          const { data } = await axios.get(
-            `http://localhost:4000/posts + {ctx?.id}`
-          );
-          setUserPosts(data);
-        }
-        fetchData();
-    }, []);
-    console.log(userPosts);
+    // useEffect(() => {
+    //     async function fetchData() {
+    //       const { data } = await axios.post(
+    //         `http://localhost:4000/posts`
+    //       );
+    //       setUserPosts(data);
+    //     }
+    //     fetchData();
+    // }, []);
+    // console.log(userPosts);
     
     return (
         <Container>
