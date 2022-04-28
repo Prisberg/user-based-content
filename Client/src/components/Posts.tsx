@@ -1,7 +1,7 @@
 import { Box, Paper, SxProps, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+// 
 function PostsFeed() {
     const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -70,6 +70,11 @@ const boxStyle: SxProps = {
 }
 
 const contentPaperStyle: SxProps = {
+    height: '100%',
+    width: '100%',
+}
+
+const contentPapere: SxProps = {
     height: '100%',
     width: '100%',
 }

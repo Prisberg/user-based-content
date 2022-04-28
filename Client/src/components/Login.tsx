@@ -12,7 +12,18 @@ interface State {
   password: string;
   showPassword: boolean;
 }
-
+function Copyright(props: any) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" to={""}>
+        Posts.Posts
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 export default function Login() {
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -127,6 +138,7 @@ const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputE
               </Grid>
             </Box>
             </Box>
+            <Copyright sx={{ mt: 5 }} />
         </Container>
     )
 }
