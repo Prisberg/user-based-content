@@ -18,7 +18,6 @@ signupRouter.post('/', async (req :Request, res:Response) => {
   } catch (err) {
     res.status(500).json('error: ' + err.message)
   }
-  
 
 })
 

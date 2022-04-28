@@ -81,7 +81,7 @@ const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputE
 
               </Grid>
               <Grid item xs={12}>
-                <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
+                <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
@@ -116,7 +116,6 @@ const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputE
                 Sign in
                 </Button>
                 </Link>
-
                 </Grid>
                 <Grid container justifyContent="center">
               <Grid item>

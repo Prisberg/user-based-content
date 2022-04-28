@@ -13,6 +13,8 @@ const port = 4000;
 
 
 import postsRouter from './routes/posts.routes';
+import signupRouter from './routes/register.routes';
+import usersRouter from './routes/users.routes';
 const routes = Router();
 
 
@@ -74,38 +76,20 @@ passport.deserializeUser((id: string, cb) => {
 });
 
 
-// Routes
-app.post('/register', async (req :Request, res:Response) => {
-  const { username, password, email } = req?.body;
-  try {
-    const hashPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({
-      username,
-      email,
-      password: hashPassword,
-    })
-    await newUser.save();
-    res.status(200).json(newUser)
-  } catch (err) {
-    res.status(500).json('error: ' + err.message)
-  }
-
-});
+// Login Routes
 app.post("/login", passport.authenticate("local"), (req :Request, res:Response) => {
   res.send("success")
 });
 
-//  get the user that is logged in
-app.get("/user", (req :Request, res:Response) => {
-  res.send(req.user);
-});
-
+// Logout Routes
 app.get("/logout", (req :Request, res:Response) => {
   req.logout();
   res.send("success")
 });
 
 routes.use('/posts', postsRouter)
+routes.use('/register', signupRouter)
+routes.use('/user', usersRouter)
 
 
 
