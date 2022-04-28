@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, Container, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, SxProps, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
 // import { AuthContext } from "../Context/AuthContext";
 
 import axios, { AxiosResponse } from "axios";
@@ -34,6 +35,8 @@ export default function Login() {
     showPassword: false,
   });
 
+
+
   const login = () => {
     axios.post("http://localhost:4000/login", {
       username,
@@ -59,6 +62,10 @@ export default function Login() {
     setValues({ ...values, [prop]: event.target.value });
     setPassword(event.target.value)
   };
+
+  const handleProceed = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+  }
   return (
     <Container>
       <Box
@@ -73,27 +80,28 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 3 }}>
+        <Box component="form" sx={{ mt: 3 }} onSubmit={handleProceed}>
           <Grid>
-
             <Grid item xs={12} >
               <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
                 <TextField
+                  type="text"
                   required
                   fullWidth
                   id="username"
                   label="username"
                   name="username"
                   autoComplete="username"
+                  value={username}
                   onChange={e => setUsername(e.target.value)}
                 />
               </FormControl>
-
             </Grid>
             <Grid item xs={12}>
               <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
+                  required
                   id="outlined-adornment-password"
                   type={values.showPassword ? 'text' : 'password'}
                   value={values.password}
@@ -114,18 +122,16 @@ export default function Login() {
               </FormControl>
             </Grid>
             <Grid   >
-              <Link to={'/user'} style={{ textDecoration: 'none' }}>
-                <Button
-                  sx={button}
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  fullWidth
-                  onClick={login}
-                >
-                  Sign in
-                </Button>
-              </Link>
+              <Button
+                sx={button}
+                type="submit"
+                color="primary"
+                variant="contained"
+                fullWidth
+                onClick={login}
+              >
+                Sign in
+              </Button>
             </Grid>
             <Grid container justifyContent="center">
               <Grid item>

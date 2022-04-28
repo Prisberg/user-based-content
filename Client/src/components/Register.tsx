@@ -76,7 +76,7 @@ export default function Register() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
+
     //NOT WORKING
     if (!data) {
       navigate("/login")

@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Container, Drawer, Grid, IconButton, Paper, SxProps, TextField, Tooltip, Typography, } from "@mui/material";
+import { Avatar, Box, Button, Container, Drawer, FormControl, Grid, IconButton, Paper, SxProps, TextField, Tooltip, Typography, } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { useContext, useEffect, useState } from "react";
@@ -11,33 +11,22 @@ import { APIContext } from "../Context/AuthContext";
 import edit from "material-ui/svg-icons/image/edit";
 import React from "react";
 import axios from "axios";
+import e from "express";
 
 
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
 }
-interface Props {
 
-}
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    justifyContent: 'flex-start',
-}));
-
-
-
-const UserInfo: React.FC<Props> = () => {
+const UserInfo = () => {
     const [postValue, setPostValue] = useState('')
     const [userInfo, setUserInfo] = useState('')
     const [userPosts, setUserPosts] = useState([]);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const ctx = useContext(APIContext);
-    console.log(ctx?.id);
+    /*     console.log(ctx?.id); */
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -59,13 +48,21 @@ const UserInfo: React.FC<Props> = () => {
         drawerHeight = '100%'
     }
 
-    const handleChange = (e: { target: { value: any; }; }) => {
-        setPostValue(e.target.value);
-        setUserInfo(e.target.value);
+    const handleChange = (e: { target: { value: any; id: string; }; }) => {
+        //User info textfield
+        if (e.target.id === ':r1:') {
+            console.log(e.target)
+            setUserInfo(e.target.value);
+            //Create post textfield
+        } else {
+            console.log(e.target)
+            setPostValue(e.target.value);
+        }
     };
 
-    const handleCreatePost = () => {
-        console.log(postValue)
+    const handleCreatePost = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        console.log(postValue);
     }
     // useEffect(() => {
     //     async function fetchData() {
@@ -86,103 +83,17 @@ const UserInfo: React.FC<Props> = () => {
                 </Typography>
                 <Avatar />
             </Box>
-            {/*                 <Tooltip 
-                title="Edit"
-                // sx={edit}
-                >
-                <Button onClick={handleDrawerOpen}
-                    sx={{ ...(open && { display: '' }) }}>
-                <EditIcon 
-                sx={editIcon}/>
-                </Button>
-                </Tooltip>
-
-                <Drawer
-                sx={{
-                position: 'absolute',
-                flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                    marginTop: '10rem',
-                    marginRight: '20rem',
-                    width: { xs: drawerWidth, sm: '35%', md: '25%', lg: '50%' },
-                    height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
-                    backgroundColor: '#fff',
-                    borderRadius: '20px'
-                    },
-                }}
-                variant="persistent"
-                anchor="right"
-                open={open}
-                > 
-                 <DrawerHeader>
-                <IconButton onClick={handleDrawerClose}>
-                <CloseIcon sx={iconStyle} />
-                </IconButton>
-                </DrawerHeader>
-                    <Typography sx={profileText}>
-                        User Profile
-                    </Typography>
-                    <Avatar />
-
-                    </Drawer> 
-                </Box>
-               
-
-               <Drawer
-                    sx={{
-                        position: 'absolute',
-                        flexShrink: 0,
-                        '& .MuiDrawer-paper': {
-                            marginTop: '10rem',
-                            marginRight: '20rem',
-                            width: { xs: drawerWidth, sm: '50%', md: '50%', lg: '50%' },
-                            height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
-                            backgroundColor: '#fff',
-                            borderRadius: '20px'
-                        },
-                    }}
-                    variant="persistent"
-                    anchor="right"
-                    open={open}
-                >
-                    <DrawerHeader>
-                        <IconButton onClick={handleDrawerClose}>
-                            <CloseIcon sx={iconStyle} />
-                        </IconButton>
-                        <Typography sx={editText}>Edit post</Typography>
-                    </DrawerHeader>
-
-
-
-                    <TextField  variant="standard">
-
-                    </TextField>
-
-                    <Button type="submit" sx={confirmBtn}>Confirm</Button>
-
-                </Drawer>  */}
             <Button>
-                <PersonRemoveIcon onClick={handleDrawerOpen}
-                    sx={{ ...(open && { display: '' }), fontSize: '3rem', marginTop: '1rem', color: 'red' }} />
+                <PersonRemoveIcon
+                    onClick={handleDrawerOpen}
+                    sx={removeIconStyle} />
             </Button>
             <Typography>Delete User</Typography>
             <Drawer
-                sx={{
-                    position: 'absolute',
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        marginTop: '10rem',
-                        marginRight: { xs: '1.5rem', sm: '8rem', lg: '20rem' },
-                        width: { xs: '90%', sm: '50%', md: '50%', lg: '50%' },
-                        height: { xs: '50%', sm: '50%', md: '40%', lg: '40%' },
-                        backgroundColor: '#ECECEC',
-                        borderRadius: '20px'
-                    },
-                }}
+                sx={drawerStyle}
                 variant="persistent"
                 anchor="right"
-                open={open}
-            >
+                open={open}>
                 <DrawerHeader >
                     <IconButton onClick={handleDrawerClose}>
                         <CloseIcon sx={iconStyle} />
@@ -192,9 +103,12 @@ const UserInfo: React.FC<Props> = () => {
                 <Button type="button" sx={confirmBtn} onClick={() => { handleDrawerClose(); }}>No</Button>
                 <Button type="button" sx={confirmBtn} onClick={() => { console.log('deleted user') }}>Yes</Button>
             </Drawer>
-            <Box>
+            <Box
+                component='form'
+                onSubmit={handleCreatePost}>
                 <Typography sx={userText}>Your bio</Typography>
                 <TextField
+                    required
                     fullWidth
                     multiline
                     rows={4}
@@ -202,19 +116,18 @@ const UserInfo: React.FC<Props> = () => {
                     onChange={handleChange} />
                 <Typography sx={userText}>Create Post</Typography>
                 <TextField
+                    required
                     fullWidth
                     multiline
                     rows={4}
                     value={postValue}
                     onChange={handleChange} />
                 <Button
-                    onClick={() => { handleCreatePost(); }}
                     type='submit'
                     sx={button}>
                     Submit Post
                 </Button>
             </Box>
-
             {/* <Box>
                     <Typography sx={text}>Your Posts</Typography>
                     {posts.map((posts) => (
@@ -236,6 +149,23 @@ const UserInfo: React.FC<Props> = () => {
     );
 }
 
+const removeIconStyle: SxProps = {
+    fontSize: '3rem',
+    marginTop: '1rem',
+    color: 'red'
+}
+const drawerStyle: SxProps = {
+    position: 'absolute',
+    flexShrink: 0,
+    '& .MuiDrawer-paper': {
+        marginTop: '10rem',
+        marginRight: { xs: '1.5rem', sm: '8rem', lg: '20rem' },
+        width: { xs: '90%', sm: '50%', md: '50%', lg: '50%' },
+        height: { xs: '50%', sm: '50%', md: '40%', lg: '40%' },
+        backgroundColor: '#ECECEC',
+        borderRadius: '20px'
+    }
+}
 const confirmBtn: SxProps = {
     backgroundColor: '#A1BFED',
     color: 'black',
@@ -309,7 +239,12 @@ const iconStyle: SxProps = {
     fontSize: '2rem',
     color: 'black'
 }
-
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    justifyContent: 'flex-start',
+}));
 
 
 
