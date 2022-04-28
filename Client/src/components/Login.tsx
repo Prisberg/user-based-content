@@ -1,32 +1,54 @@
-import { Avatar, Box, Button, Container, FormControl, Grid, SxProps, TextField, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, SxProps, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // import { AuthContext } from "../Context/AuthContext";
 
 import axios, { AxiosResponse } from "axios";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import React from "react";
 
+interface State {
+  username: string;
+  password: string;
+  showPassword: boolean;
+}
 
 export default function Login() {
- 
-  const [email, setEmail] = useState<string>("")
+  const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
 
-  const login = async () => {
-  await axios.post("http://localhost:4000/login", {
-    email,
+  const [values, setValues] = React.useState<State>({
+    username: '',
+    password: '',
+    showPassword: false,
+  });
+
+  const login =  () => {
+   axios.post("http://localhost:4000/login", {
+    username,
     password
   }, {
     withCredentials: true
   }).then((res : AxiosResponse) => {
     if (res.data === "success") {
      console.log("success");
+     window.location.href = "/user"
      /* TEMPORARY? */
-     
-   }
+       }
   }, () => {
     console.log("Failure");
   })
 }
+const handleClickShowPassword = () => {
+  setValues({
+    ...values,
+    showPassword: !values.showPassword,
+  });
+};
+const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  setValues({ ...values, [prop]: event.target.value });
+  setPassword(event.target.value)
+};
     return (
         <Container>
             <Box 
@@ -49,27 +71,37 @@ export default function Login() {
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="email"
-                  name="email"
-                  autoComplete="email"
-                  onChange={e => setEmail(e.target.value)}
+                  id="username"
+                  label="username"
+                  name="username"
+                  autoComplete="username"
+                  onChange={e => setUsername(e.target.value)}
                 />
                 </FormControl>
 
               </Grid>
-              <Grid item  >
-              <FormControl sx={{ m: 1, mt: 3 , width: '30ch' }} variant="outlined">
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  onChange={e => setPassword(e.target.value)}
-                />
-               </FormControl>
+              <Grid item xs={12}>
+                <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChange('password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
               </Grid>
               <Grid   >
               <Link to={'/user'} style={{ textDecoration: 'none' }}>

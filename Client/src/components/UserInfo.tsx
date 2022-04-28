@@ -6,9 +6,18 @@ import { ReactChild, ReactFragment, ReactPortal, MouseEventHandler } from 'react
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
+<<<<<<< HEAD
 import { posts } from "./Posts";
+=======
+
+// import { posts } from "./Posts";
+>>>>>>> cf7cfab62791993c773c76e5883f0651449c786a
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { APIContext } from "../Context/AuthContext";
+<<<<<<< HEAD
+=======
+import edit from "material-ui/svg-icons/image/edit";
+>>>>>>> cf7cfab62791993c773c76e5883f0651449c786a
 import React from "react";
 
 
@@ -72,17 +81,55 @@ const UserInfo: React.FC<Props> = () => {
         <Container>
             <Box>
                 <Box sx={profile}>
+                <Typography sx={profileText}>
+                {ctx?.username}
 
+                </Typography>
+                <Avatar />
+                </Box>
+                <Tooltip 
+                title="Edit"
+                // sx={edit}
+                >
+                <Button onClick={handleDrawerOpen}
+                    sx={{ ...(open && { display: '' }) }}>
+                <EditIcon 
+                sx={editIcon}/>
+                </Button>
+                </Tooltip>
+
+                <Drawer
+                sx={{
+                position: 'absolute',
+                flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                    marginTop: '10rem',
+                    marginRight: '20rem',
+                    width: { xs: drawerWidth, sm: '35%', md: '25%', lg: '50%' },
+                    height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
+                    backgroundColor: '#fff',
+                    borderRadius: '20px'
+                    },
+                }}
+                variant="persistent"
+                anchor="right"
+                open={open}
+                > 
+                 <DrawerHeader>
+                <IconButton onClick={handleDrawerClose}>
+                <CloseIcon sx={iconStyle} />
+                </IconButton>
+                </DrawerHeader>
                     <Typography sx={profileText}>
                         User Profile
                     </Typography>
                     <Avatar />
 
-          
+                    </Drawer> 
                 </Box>
-                
+               
 
-                {/*                 <Drawer
+               <Drawer
                     sx={{
                         position: 'absolute',
                         flexShrink: 0,
@@ -108,13 +155,13 @@ const UserInfo: React.FC<Props> = () => {
 
 
 
-                    <TextField sx={editField} variant="standard">
+                    <TextField  variant="standard">
 
                     </TextField>
 
                     <Button type="submit" sx={confirmBtn}>Confirm</Button>
 
-                </Drawer> */}
+                </Drawer> 
                 <Button>
                     <PersonRemoveIcon onClick={handleDrawerOpen}
                         sx={{ ...(open && { display: '' }), fontSize: '3rem', marginTop: '1rem', color: 'red' }} />
@@ -164,7 +211,7 @@ const UserInfo: React.FC<Props> = () => {
                     </Button>
                 </Box>
 
-                <Box>
+                {/* <Box>
                     <Typography sx={text}>Your Posts</Typography>
                     {posts.map((posts) => (
                         <Paper key={posts.id} sx={newPost}>
@@ -180,8 +227,7 @@ const UserInfo: React.FC<Props> = () => {
                             </Typography>
                         </Paper>
                     ))}
-                </Box>
-            </Box>
+                </Box> */}
         </Container>
     );
 }
