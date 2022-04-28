@@ -73,3 +73,8 @@ const contentPaperStyle: SxProps = {
     height: '100%',
     width: '100%',
 }
+
+const contentPapere: SxProps = {
+    height: '100%',
+    width: '100%',
+}
