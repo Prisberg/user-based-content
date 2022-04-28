@@ -7,6 +7,7 @@ import Register from "./components/Register";
 import Menu from "./components/Menu";
 import UserInfo from "./components/UserInfo";
 import  APIContextProvider  from "./Context/AuthContext";
+import BadGate from "./components/BadGate";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route path="user" element={<UserInfo />} />
-        <Route path="*" element={<div>Invalid URL, sorry.</div>} />
+        <Route path="*" element={<BadGate/>} />
       </Routes>
       </APIContextProvider>
       </ErrorBoundary>
