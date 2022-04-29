@@ -12,12 +12,12 @@ import React from "react";
 import axios, { AxiosResponse } from "axios";
 import BadGate from "./BadGate";
 
+
 function UserInfo() {
     const [open, setOpen] = React.useState(false);
     const [openEditPost, setOpenEditPost] = React.useState(false);
     const [userPosts, setUserPosts] = useState([]);
     const [description, setDescription] = useState<string>("")
-    const [selectedPost, setSelectedPost] = useState()
     const desc = useRef();
 
 
@@ -66,18 +66,15 @@ function UserInfo() {
     }, [ctx?.id]);
     console.log(userPosts);
 
-    async function editPost() { 
-        // const postId = userPosts.findIndex( (x: any) => x.id == item)
-        console.log(selectedPost);
-        
-        await axios.put("http://localhost:4000/posts/" + selectedPost, {
-            userId: ctx?.id,
+    async function editPost() {
+        await axios.put("http://localhost:4000/", {
             description
           }, {
             withCredentials: true
           }).then((res: AxiosResponse) => {
-              window.location.reload();
+            if (res.data === "success") {
               console.log('suc');
+            }
           }, () => {
             console.log("Failure");
           })
@@ -115,6 +112,7 @@ function UserInfo() {
         console.log(userInfo)
         setPostValue('')
     }
+
     return (
         ctx ?
             <Container>
@@ -238,18 +236,15 @@ function UserInfo() {
                 </Box>
                 <Box >
             {userPosts.map((post: any) => (
-
-                <Box  key={post?._id} >
-                    <Paper elevation={3} >
-                        <Box >
-                            <Typography variant="h5">{post?.description}</Typography>
-                            <Typography></Typography>
-                            <Button onClick={() => {
-                            handleEditDrawerOpen()
-                            setSelectedPost(post?._id)
-                            }}
-                            sx={{ ...(openEditPost && { display: '' }) }}>
-
+                <Box  key={post._id}>
+                    <Paper  elevation={3} sx={userStyle}>
+                        <Typography  variant="h6">
+                            {ctx?.username}
+                        </Typography>
+                    </Paper>
+                    <Box sx={btnGroup}>
+                            <Button onClick={handleEditDrawerOpen}
+                            sx={{ ...(openEditPost && { display: '' }), float:'right' }}>
                             <EditIcon 
                             //sx={edit}
                             />
@@ -294,19 +289,15 @@ function UserInfo() {
                         <Typography sx={editText}>Edit post</Typography>
                     </DrawerHeader>
 
-                    <TextField  
-                    required
-                    fullWidth
+                    <TextField
+                    sx={editTextStyle}
                     multiline
                     rows={4}
-                    type="text"
-                    value={description}
-                    // d
-                    onChange={e => setDescription(e.target.value)}r
+                    
                     >
 
                     </TextField>
-                    <Button onClick={editPost} sx={confirmBtn}>Confirm</Button>
+                    <Button type="submit" sx={confirmBtn}>Confirm</Button>
 
                 </Drawer>
         </Container>

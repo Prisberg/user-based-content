@@ -9,12 +9,7 @@ import UserInfo from "./components/UserInfo";
 import APIContextProvider from "./Context/AuthContext";
 import BadGate from "./components/BadGate";
 import Logout from "./components/Logout";
-import { IPost } from "./interface"
 
-
-interface Props {
-  post: IPost;
-}
 function App() {
   return (
     <BrowserRouter>
@@ -26,7 +21,7 @@ function App() {
             <Route path="/admin" element={<AdminPage />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
-            <Route path="user" element={<UserInfo  />} />
+            <Route path="user" element={<UserInfo />} />
             <Route path="logout" element={<Logout />} />
             <Route path="*" element={<BadGate />} />
           </Routes>

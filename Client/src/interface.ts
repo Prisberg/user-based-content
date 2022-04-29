@@ -3,9 +3,3 @@ export interface UserInterface {
   username: string;
   isAdmin: boolean;
 }
-
-export interface IPost {
-  username: string;
-  date: string;
-  _id: string
-}
