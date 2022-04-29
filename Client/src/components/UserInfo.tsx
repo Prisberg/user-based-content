@@ -15,6 +15,7 @@ import BadGate from "./BadGate";
 function UserInfo() {
     const [open, setOpen] = React.useState(false);
     const [openEditPost, setOpenEditPost] = React.useState(false);
+    const [openDelete, setOpenDelete] = React.useState(false);
     const [userPosts, setUserPosts] = useState([]);
     const [description, setDescription] = useState<string>("")
     const [selectedPost, setSelectedPost] = useState()
@@ -43,15 +44,21 @@ function UserInfo() {
     const handleEditDrawerClose = () => {
         setOpenEditPost(false);
     };
+    const handleDeleteDrawerOpen = () => {
+        setOpenDelete(true);
+    };
+    const handleDeleteDrawerClose = () => {
+        setOpenDelete(false);
+    };
 
     let drawerWidth
-    if (!open || !openEditPost) {
+    if (!open || !openEditPost || !openDelete) {
         drawerWidth = '0%'
     } else {
         drawerWidth = '100%'
     }
     let drawerHeight
-    if (!open || !openEditPost) {
+    if (!open || !openEditPost|| !openDelete) {
         drawerHeight = '0%'
     } else {
         drawerHeight = '100%'
@@ -66,9 +73,7 @@ function UserInfo() {
     }, [ctx?.id]);
     console.log(userPosts);
 
-    async function editPost() { 
-        // const postId = userPosts.findIndex( (x: any) => x.id == item)
-        console.log(selectedPost);
+    async function editPost() {
         
         await axios.put("http://localhost:4000/posts/" + selectedPost, {
             userId: ctx?.id,
@@ -76,6 +81,14 @@ function UserInfo() {
           }, {
             withCredentials: true
           }).then((res: AxiosResponse) => {
+              window.location.reload();
+              console.log('suc');
+          }, () => {
+            console.log("Failure");
+          })
+      }
+      async function deletePost() {
+        await axios.delete("http://localhost:4000/posts/" + selectedPost, { data: { userId: ctx?.id } },).then((res: AxiosResponse) => {
               window.location.reload();
               console.log('suc');
           }, () => {
@@ -238,7 +251,6 @@ function UserInfo() {
                 </Box>
                 <Box >
             {userPosts.map((post: any) => (
-
                 <Box  key={post?._id} >
                     <Paper elevation={3} >
                         <Box >
@@ -251,22 +263,44 @@ function UserInfo() {
                             sx={{ ...(openEditPost && { display: '' }) }}>
 
                             <EditIcon 
-                            //sx={edit}
+                            //sx={edit}deletePost
                             />
                             </Button>
-                            <Button sx={{ float: 'right', color: 'red' }}>
+                            <Button onClick={() => {
+                            setSelectedPost(post?._id)
+                            setOpenDelete(true)
+                            }}sx={{ float: 'right', color: 'red' }}>
                             <DeleteForeverIcon/>
                             </Button>
                             </Box>
-                    <Paper elevation={3}  sx={postStyle}>
-                        <Box >
-                            <Typography variant="h5" sx={postText}>{post.description}</Typography>
-                            <Typography></Typography>
-                            
-                            </Box>
                     </Paper>
-                    
-                </Box>
+                    <Drawer
+                    sx={drawerStyle}
+                    variant="persistent"
+                    anchor="right"
+                    open={openDelete}>
+                    <DrawerHeader >
+                        <IconButton onClick={handleDrawerClose}>
+                            <CloseIcon sx={iconStyle} />
+                        </IconButton>
+                        <Typography sx={editText}>Are you sure you want to delete this account?</Typography>
+                    </DrawerHeader>
+                    <Button
+                        type="button"
+                        sx={confirmBtn}
+                        onClick={() => { 
+                            handleDrawerClose();
+                         }}>
+                        No
+                    </Button>
+                    <Button
+                        type="button"
+                        sx={confirmBtn}
+                        onClick={deletePost}>
+                        Yes
+                    </Button>
+                </Drawer>
+                    </Box>
                 
             ))}
         </Box>
@@ -302,7 +336,7 @@ function UserInfo() {
                     type="text"
                     value={description}
                     // d
-                    onChange={e => setDescription(e.target.value)}r
+                    onChange={e => setDescription(e.target.value)}
                     >
 
                     </TextField>

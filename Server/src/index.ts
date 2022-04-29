@@ -20,7 +20,7 @@ const myStrategy = passportLocal.Strategy
 
 dotenv.config();
 mongoose.connect(
-  `mongodb://localhost:27017`,(err) => {
+  `${process.env.DB_ACCESS}`,(err) => {
     if (err) throw err;
     console.log("Connected To Mongo")
   });
