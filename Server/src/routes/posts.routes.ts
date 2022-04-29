@@ -1,5 +1,6 @@
 import express, { Request, Response, Router  } from 'express';
 import Post from '../models/posts';
+import User from '../models/SignUpModels';
 
 
 
@@ -19,15 +20,17 @@ postsRouter.get('/',  (req :Request, res:Response) => {
   });
 })
 //  get a post
-postsRouter.get('/:id',  (req :Request, res:Response) => {
+postsRouter.get('/profile/:userId', async (req :Request, res:Response) => {
 
-  const posts = Post.findById(req.params.id, (err: any, post: any) =>{
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(post);
-    }
-  }) 
+  try {
+    const currentUser = await User.findById(req.params.userId);
+    const userPosts = await Post.find({ userId: currentUser._id });
+    console.log(currentUser);
+    
+    res.status(200).json(userPosts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 })
 //  Creat a New Post
 postsRouter.post('/', async (req :Request, res:Response) => {
@@ -41,9 +44,9 @@ postsRouter.post('/', async (req :Request, res:Response) => {
 })
 
 // Edit a post
-postsRouter.put('/:id',  (req :Request, res:Response) => {
+postsRouter.put('/:id', async (req :Request, res:Response) => {
 
-    const post =   Post.findByIdAndUpdate(
+    const post =  await Post.findByIdAndUpdate(
       req.params.id,
       req.body,
       (err: any, book: any) => {

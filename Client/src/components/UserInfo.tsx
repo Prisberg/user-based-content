@@ -1,8 +1,7 @@
 import { Avatar, Box, Button, Container, Drawer, Grid, IconButton, Paper, SxProps, TextField, Tooltip, Typography, } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-import { useContext, useEffect, useState } from "react";
-import { ReactChild, ReactFragment, ReactPortal, MouseEventHandler } from 'react';
+import { useContext, useEffect, useRef, useState } from "react";
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,7 +9,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { APIContext } from "../Context/AuthContext";
 import edit from "material-ui/svg-icons/image/edit";
 import React from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 
 
@@ -31,9 +30,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 const UserInfo: React.FC<Props> = () => {
-    const [postValue, setPostValue] = useState('')
+    // const [postValue, setPostValue] = useState('')
     const [open, setOpen] = React.useState(false);
     const [userPosts, setUserPosts] = useState([]);
+    const [description, setDescription] = useState<string>("")
+    const desc = useRef();
 
     const ctx = useContext(APIContext);
     console.log(ctx?.id);
@@ -58,24 +59,44 @@ const UserInfo: React.FC<Props> = () => {
         drawerHeight = '100%'
     }
 
-    const handleChange = (e: { target: { value: any; }; }) => {
-        setPostValue(e.target.value);
-    };
+    useEffect(() => {
+        async function fetchData() {
+          const { data } = await axios.get(`http://localhost:4000/posts/profile/` + ctx?.id);
+          setUserPosts(data);
+        }
+        fetchData();
+    }, [ctx?.id]);
+    console.log(userPosts);
 
-    const handleCreatePost = () => {
-        console.log(postValue)
-    }
-    // useEffect(() => {
-    //     async function fetchData() {
-    //       const { data } = await axios.post(
-    //         `http://localhost:4000/posts`
-    //       );
-    //       setUserPosts(data);
-    //     }
-    //     fetchData();
-    // }, []);
-    // console.log(userPosts);
-    
+    async function editPost() {
+        await axios.put("http://localhost:4000/", {
+            description
+          }, {
+            withCredentials: true
+          }).then((res: AxiosResponse) => {
+            if (res.data === "success") {
+              console.log('suc');
+            }
+          }, () => {
+            console.log("Failure");
+          })
+      }
+      const textInput = React.useRef(null);
+
+      const submitHandler = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        const newPost = {
+            userId: ctx?.id,
+            description,
+        };
+        try {
+          await axios.post("http://localhost:4000/posts", newPost);
+          window.location.reload();
+        } catch (err) {
+            console.log("Failure")
+        }
+      };
+
     return (
         <Container>
             <Box>
@@ -151,12 +172,9 @@ const UserInfo: React.FC<Props> = () => {
                         <Typography sx={editText}>Edit post</Typography>
                     </DrawerHeader>
 
-
-
                     <TextField  variant="standard">
 
                     </TextField>
-
                     <Button type="submit" sx={confirmBtn}>Confirm</Button>
 
                 </Drawer> 
@@ -195,38 +213,40 @@ const UserInfo: React.FC<Props> = () => {
                 <Box>
                     <Typography sx={userText}>Create Post</Typography>
                     <TextField
-                        
                         fullWidth
                         multiline
                         rows={4}
-                        value={postValue}
-                        onChange={handleChange} />
+                        type="text"
+                        value={description}
+                        inputRef={textInput}
+                        onChange={e => setDescription(e.target.value)}
+                        />
                     <Button
-                        onClick={() => { handleCreatePost(); }}
+                        onClick={submitHandler}
                         type='submit'
                         sx={button}>
-                        Submit Post
+                         Post
                     </Button>
                 </Box>
-
-                {/* <Box>
-                    <Typography sx={text}>Your Posts</Typography>
-                    {posts.map((posts) => (
-                        <Paper key={posts.id} sx={newPost}>
-                            <Button sx={deleteBtn}>
-                                <DeleteForeverIcon />
-                            </Button>
-                            <Button>
-                            <EditIcon
-                            sx={editIcon} />
-                            </Button>
-                            <Typography >
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus quis eligendi sit numquam odit corporis, quasi, veniam quibusdam harum laborum rerum nisi asperiores unde hic! Alias atque tempore cumque id!
-                            </Typography>
-                        </Paper>
-                    ))}
-                </Box> */}
+                <Box >
+            {userPosts.map((post: any) => (
+                <Box  key={post._id}>
+                    <Paper elevation={3} >
+                        <Box >
+                            <Typography variant="h5">{post.description}</Typography>
+                            <Typography></Typography>
+                        </Box>
+                    </Paper>
+                    <Paper  elevation={3}>
+                        <Typography  variant="h6">
+                            {ctx?.username}
+                        </Typography>
+                    </Paper>
+                </Box>
+            ))}
+        </Box>
         </Container>
+        
     );
 }
 
