@@ -38,6 +38,7 @@ const UserInfo = () => {
         //send textinput values to db
         console.log(postValue);
         console.log(userInfo)
+        setPostValue('')
     }
 
     // useEffect(() => {
