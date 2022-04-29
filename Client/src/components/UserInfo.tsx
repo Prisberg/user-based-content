@@ -132,8 +132,9 @@ function UserInfo() {
                 <Button onClick={handleDrawerOpen}
                     sx={{ ...(open && { display: '' }) }}>
                 <EditIcon 
-                //sx={edit}
+                sx={editIconStyle}
                 />
+                <Typography>Edit</Typography>
                 </Button>
                 </Tooltip>
                 <Drawer
@@ -168,8 +169,9 @@ function UserInfo() {
                     <PersonRemoveIcon
                         onClick={handleDrawerOpen}
                         sx={removeIconStyle} />
+                        <Typography>Delete</Typography>
                 </Button>
-                <Typography>Delete User</Typography>
+                
                 <Drawer
                     sx={drawerStyle}
                     variant="persistent"
@@ -214,7 +216,8 @@ function UserInfo() {
                 </Box>
                 <Box
                     component='form'
-                    onSubmit={handleSubmission}>
+                    onSubmit={handleSubmission}
+                    sx={postBox}>
                     <Typography sx={userText}>Create Post</Typography>
                     <TextField
                         required
@@ -235,6 +238,7 @@ function UserInfo() {
                 </Box>
                 <Box >
             {userPosts.map((post: any) => (
+
                 <Box  key={post?._id} >
                     <Paper elevation={3} >
                         <Box >
@@ -245,17 +249,23 @@ function UserInfo() {
                             setSelectedPost(post?._id)
                             }}
                             sx={{ ...(openEditPost && { display: '' }) }}>
+
                             <EditIcon 
                             //sx={edit}
                             />
                             </Button>
+                            <Button sx={{ float: 'right', color: 'red' }}>
+                            <DeleteForeverIcon/>
+                            </Button>
+                            </Box>
+                    <Paper elevation={3}  sx={postStyle}>
+                        <Box >
+                            <Typography variant="h5" sx={postText}>{post.description}</Typography>
+                            <Typography></Typography>
+                            
                             </Box>
                     </Paper>
-                    <Paper  elevation={3}>
-                        <Typography  variant="h6">
-                            {ctx?.username}
-                        </Typography>
-                    </Paper>
+                    
                 </Box>
                 
             ))}
@@ -266,10 +276,10 @@ function UserInfo() {
                         flexShrink: 0,
                         '& .MuiDrawer-paper': {
                             marginTop: '10rem',
-                            marginRight: '20rem',
-                            width: { xs: drawerWidth, sm: '50%', md: '50%', lg: '50%' },
-                            height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
-                            backgroundColor: '#fff',
+                            marginRight: { sm: '8rem', lg: '20rem' },
+                            width: { xs: '100%', sm: '50%', md: '50%', lg: '50%' },
+                            height: { xs: '50%', sm: '40%', md: '40%', lg: '40%' },
+                            backgroundColor: '#ECECEC',
                             borderRadius: '20px'
                         },
                     }}
@@ -292,7 +302,7 @@ function UserInfo() {
                     type="text"
                     value={description}
                     // d
-                    onChange={e => setDescription(e.target.value)}
+                    onChange={e => setDescription(e.target.value)}r
                     >
 
                     </TextField>
@@ -307,7 +317,14 @@ function UserInfo() {
 const removeIconStyle: SxProps = {
     fontSize: '3rem',
     marginTop: '1rem',
+    paddingRight: '1rem',
     color: 'red'
+}
+const editIconStyle: SxProps = {
+    fontSize: '3rem',
+    marginTop: '1rem',
+    paddingRight: '1rem',
+    color: 'blue'
 }
 const drawerStyle: SxProps = {
     position: 'absolute',
@@ -332,6 +349,7 @@ const confirmBtn: SxProps = {
 
 const editText: SxProps = {
     fontSize: '2rem',
+    marginTop: '1.5rem',
     marginLeft: '2rem',
 }
 const userText: SxProps = {
@@ -357,8 +375,41 @@ const button: SxProps = {
     float: 'right'
 }
 const iconStyle: SxProps = {
+    marginTop: '1.5rem',
     fontSize: '2rem',
     color: 'black'
+}
+const postBox: SxProps = {
+    marginBottom: '5rem'
+}
+const postStyle: SxProps = {
+    marginTop: '2.5rem',
+    minHeight: '8rem',
+    height: 'auto',
+    backgroundColor: '#FAFAFA',
+    marginBottom: '2rem'
+}
+const postText: SxProps = {
+    paddingTop: '1.5rem',
+    marginLeft: '1rem',
+    wordBreak: 'break-all',
+    paddingBottom: '1.5rem',
+    paddingLeft: '1rem',
+    paddingRight: '1rem'
+}
+const btnGroup: SxProps = {
+    marginTop: '-2rem'
+    
+}
+const userStyle: SxProps = {
+    backgroundColor: '#bdbdbd',
+    marginTop: '5rem',
+    width: '10rem',
+    height: '2.5rem',
+    paddingLeft: '1rem',
+}
+const editTextStyle: SxProps = {
+    marginTop: '2rem'
 }
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',

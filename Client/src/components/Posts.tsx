@@ -15,13 +15,16 @@ function PostsFeed() {
     }, []);
     console.log(posts);
 
+    
+
     return (
         <Box sx={boxStyle}>
             {posts.map((post: any) => (
                 <Box sx={postStyle} key={post._id}>
+                    
                     <Paper elevation={3} sx={contentPaperStyle}>
                         <Box sx={contentStyle}>
-                            <Typography variant="h5">{post.description}</Typography>
+                            <Typography variant="h5" sx={postText}>{post.description}</Typography>
                             <Typography></Typography>
                         </Box>
                     </Paper>
@@ -70,11 +73,20 @@ const boxStyle: SxProps = {
 }
 
 const contentPaperStyle: SxProps = {
-    height: '100%',
+    minHeight: '8rem',
+    height: 'auto',
     width: '100%',
 }
 
 const contentPapere: SxProps = {
     height: '100%',
     width: '100%',
+}
+const postText: SxProps = {
+    paddingTop: '1.5rem',
+    marginLeft: '1rem',
+    wordBreak: 'break-all',
+    paddingBottom: '1.5rem',
+    paddingLeft: '1rem',
+    paddingRight: '1rem'
 }
