@@ -114,6 +114,15 @@ const UserInfo = () => {
                     rows={4}
                     value={userInfo}
                     onChange={handleChange} />
+                <Button
+                    type='submit'
+                    sx={button}>
+                    Update Bio
+                </Button>
+            </Box>
+            <Box
+                component='form'
+                onSubmit={handleCreatePost}>
                 <Typography sx={userText}>Create Post</Typography>
                 <TextField
                     required
@@ -145,7 +154,7 @@ const UserInfo = () => {
                         </Paper>
                     ))}
                 </Box> */}
-        </Container>
+        </Container >
     );
 }
 

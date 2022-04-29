@@ -57,11 +57,8 @@ export default function Register() {
     }, {
       withCredentials: true
     }).then((res: AxiosResponse) => {
-      //NOT RUNNING
-      if (res.data === "success") {
-        console.log('suc');
-        navigate("/login")
-      }
+      console.log('Success')
+      navigate("/login")
     }, () => {
       console.log("Failure");
     })
@@ -74,6 +71,7 @@ export default function Register() {
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    register();
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -175,7 +173,6 @@ export default function Register() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                onClick={register}
                 sx={{ mt: 3, mb: 2 }}
               >
                 Sign Up
