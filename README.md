@@ -4,7 +4,7 @@ We created a simple social platform called Post. The users can view others posts
 
 Hazem Kawas, Erik Isaksson, Philip Risberg.
 
-[Github Repository]https://github.com/Prisberg/user-based-content
+[Github Repository](https://github.com/Prisberg/user-based-content)
 
 ## Run the project
 1. open and split the terminal.
