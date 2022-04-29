@@ -30,8 +30,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 const UserInfo: React.FC<Props> = () => {
-    // const [postValue, setPostValue] = useState('')
     const [open, setOpen] = React.useState(false);
+    const [openEditPost, setOpenEditPost] = React.useState(false);
     const [userPosts, setUserPosts] = useState([]);
     const [description, setDescription] = useState<string>("")
     const desc = useRef();
@@ -45,15 +45,21 @@ const UserInfo: React.FC<Props> = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    const handleEditDrawerOpen = () => {
+        setOpenEditPost(true);
+    };
+    const handleEditDrawerClose = () => {
+        setOpenEditPost(false);
+    };
 
     let drawerWidth
-    if (!open) {
+    if (!open || !openEditPost) {
         drawerWidth = '0%'
     } else {
         drawerWidth = '100%'
     }
     let drawerHeight
-    if (!open) {
+    if (!open || !openEditPost) {
         drawerHeight = '0%'
     } else {
         drawerHeight = '100%'
@@ -116,7 +122,6 @@ const UserInfo: React.FC<Props> = () => {
                 sx={editIcon}/>
                 </Button>
                 </Tooltip>
-
                 <Drawer
                 sx={{
                 position: 'absolute',
@@ -148,7 +153,7 @@ const UserInfo: React.FC<Props> = () => {
                 </Box>
                
 
-               <Drawer
+               {/* <Drawer
                     sx={{
                         position: 'absolute',
                         flexShrink: 0,
@@ -177,7 +182,7 @@ const UserInfo: React.FC<Props> = () => {
                     </TextField>
                     <Button type="submit" sx={confirmBtn}>Confirm</Button>
 
-                </Drawer> 
+                </Drawer>  */}
                 <Button>
                     <PersonRemoveIcon onClick={handleDrawerOpen}
                         sx={{ ...(open && { display: '' }), fontSize: '3rem', marginTop: '1rem', color: 'red' }} />
@@ -235,7 +240,12 @@ const UserInfo: React.FC<Props> = () => {
                         <Box >
                             <Typography variant="h5">{post.description}</Typography>
                             <Typography></Typography>
-                        </Box>
+                            <Button onClick={handleEditDrawerOpen}
+                            sx={{ ...(openEditPost && { display: '' }) }}>
+                            <EditIcon 
+                            sx={editIcon}/>
+                            </Button>
+                            </Box>
                     </Paper>
                     <Paper  elevation={3}>
                         <Typography  variant="h6">
@@ -243,8 +253,39 @@ const UserInfo: React.FC<Props> = () => {
                         </Typography>
                     </Paper>
                 </Box>
+                
             ))}
         </Box>
+        <Drawer
+                    sx={{
+                        position: 'absolute',
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                            marginTop: '10rem',
+                            marginRight: '20rem',
+                            width: { xs: drawerWidth, sm: '50%', md: '50%', lg: '50%' },
+                            height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
+                            backgroundColor: '#fff',
+                            borderRadius: '20px'
+                        },
+                    }}
+                    variant="persistent"
+                    anchor="right"
+                    open={openEditPost}
+                >
+                    <DrawerHeader>
+                        <IconButton onClick={handleEditDrawerClose}>
+                            <CloseIcon sx={iconStyle} />
+                        </IconButton>
+                        <Typography sx={editText}>Edit post</Typography>
+                    </DrawerHeader>
+
+                    <TextField  variant="standard">
+
+                    </TextField>
+                    <Button type="submit" sx={confirmBtn}>Confirm</Button>
+
+                </Drawer>
         </Container>
         
     );
