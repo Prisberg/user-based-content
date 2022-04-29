@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
 import { APIContext } from "../Context/AuthContext";
+import BadGate from "./BadGate";
 
 
 const UserInfo = () => {
@@ -51,79 +52,80 @@ const UserInfo = () => {
     // console.log(userPosts);
 
     return (
-        <Container>
-            <Box sx={profile}>
-                <Typography sx={profileText}>
-                    {ctx?.username}
-                </Typography>
-                <Avatar />
-            </Box>
-            <Button>
-                <PersonRemoveIcon
-                    onClick={handleDrawerOpen}
-                    sx={removeIconStyle} />
-            </Button>
-            <Typography>Delete User</Typography>
-            <Drawer
-                sx={drawerStyle}
-                variant="persistent"
-                anchor="right"
-                open={open}>
-                <DrawerHeader >
-                    <IconButton onClick={handleDrawerClose}>
-                        <CloseIcon sx={iconStyle} />
-                    </IconButton>
-                    <Typography sx={editText}>Are you sure you want to delete this account?</Typography>
-                </DrawerHeader>
-                <Button
-                    type="button"
-                    sx={confirmBtn}
-                    onClick={() => { handleDrawerClose(); }}>
-                    No
+        ctx ?
+            <Container>
+                <Box sx={profile}>
+                    <Typography sx={profileText}>
+                        {ctx?.username}
+                    </Typography>
+                    <Avatar />
+                </Box>
+                <Button>
+                    <PersonRemoveIcon
+                        onClick={handleDrawerOpen}
+                        sx={removeIconStyle} />
                 </Button>
-                <Button
-                    type="button"
-                    sx={confirmBtn}
-                    onClick={() => { console.log('deleted user') }}>
-                    Yes
-                </Button>
-            </Drawer>
-            <Box
-                component='form'
-                onSubmit={handleSubmission}>
-                <Typography sx={userText}>Your bio</Typography>
-                <TextField
-                    id="bio"
-                    required
-                    fullWidth
-                    multiline
-                    rows={4}
-                    value={userInfo}
-                    onChange={handleChange} />
-                <Button
-                    type='submit'
-                    sx={button}>
-                    Update Bio
-                </Button>
-            </Box>
-            <Box
-                component='form'
-                onSubmit={handleSubmission}>
-                <Typography sx={userText}>Create Post</Typography>
-                <TextField
-                    required
-                    fullWidth
-                    multiline
-                    rows={4}
-                    value={postValue}
-                    onChange={handleChange} />
-                <Button
-                    type='submit'
-                    sx={button}>
-                    Submit Post
-                </Button>
-            </Box>
-            {/* <Box>
+                <Typography>Delete User</Typography>
+                <Drawer
+                    sx={drawerStyle}
+                    variant="persistent"
+                    anchor="right"
+                    open={open}>
+                    <DrawerHeader >
+                        <IconButton onClick={handleDrawerClose}>
+                            <CloseIcon sx={iconStyle} />
+                        </IconButton>
+                        <Typography sx={editText}>Are you sure you want to delete this account?</Typography>
+                    </DrawerHeader>
+                    <Button
+                        type="button"
+                        sx={confirmBtn}
+                        onClick={() => { handleDrawerClose(); }}>
+                        No
+                    </Button>
+                    <Button
+                        type="button"
+                        sx={confirmBtn}
+                        onClick={() => { console.log('deleted user') }}>
+                        Yes
+                    </Button>
+                </Drawer>
+                <Box
+                    component='form'
+                    onSubmit={handleSubmission}>
+                    <Typography sx={userText}>Your bio</Typography>
+                    <TextField
+                        id="bio"
+                        required
+                        fullWidth
+                        multiline
+                        rows={4}
+                        value={userInfo}
+                        onChange={handleChange} />
+                    <Button
+                        type='submit'
+                        sx={button}>
+                        Update Bio
+                    </Button>
+                </Box>
+                <Box
+                    component='form'
+                    onSubmit={handleSubmission}>
+                    <Typography sx={userText}>Create Post</Typography>
+                    <TextField
+                        required
+                        fullWidth
+                        multiline
+                        rows={4}
+                        value={postValue}
+                        onChange={handleChange} />
+                    <Button
+                        type='submit'
+                        sx={button}>
+                        Submit Post
+                    </Button>
+                </Box>
+                {/* <Box>
                     <Typography sx={text}>Your Posts</Typography>
                     {posts.map((posts) => (
                         <Paper key={posts.id} sx={newPost}>
@@ -140,7 +142,8 @@ const UserInfo = () => {
                         </Paper>
                     ))}
                 </Box> */}
-        </Container >
+            </Container >
+            : <BadGate />
     );
 }
 

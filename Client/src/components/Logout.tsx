@@ -1,14 +1,22 @@
-import { Box, Typography, Button, SxProps } from "@mui/material"
+import { Box, Typography, SxProps } from "@mui/material"
+import { useContext } from "react";
+import { APIContext } from "../Context/AuthContext";
+import BadGate from "./BadGate";
 
 export default function Logout() {
+    const ctx = useContext(APIContext);
+
     return (
-        <Box sx={boxStyle}>
-            <Typography
-                variant="h1"
-                sx={h1Style}>
-                Logging you out..
-            </Typography>
-        </Box>)
+        ctx ?
+            <Box sx={boxStyle}>
+                <Typography
+                    variant="h1"
+                    sx={h1Style}>
+                    Logging you out..
+                </Typography>
+            </Box>
+            : <BadGate />
+    )
 }
 
 const h1Style: SxProps = {
