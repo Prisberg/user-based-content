@@ -50,7 +50,7 @@ const UserInfo = () => {
 
     const handleChange = (e: { target: { value: any; id: string; }; }) => {
         //User info textfield
-        if (e.target.id === ':r1:') {
+        if (e.target.id === 'bio') {
             console.log(e.target)
             setUserInfo(e.target.value);
             //Create post textfield
@@ -63,7 +63,9 @@ const UserInfo = () => {
     const handleCreatePost = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         console.log(postValue);
+        console.log(userInfo)
     }
+
     // useEffect(() => {
     //     async function fetchData() {
     //       const { data } = await axios.post(
@@ -108,6 +110,7 @@ const UserInfo = () => {
                 onSubmit={handleCreatePost}>
                 <Typography sx={userText}>Your bio</Typography>
                 <TextField
+                    id="bio"
                     required
                     fullWidth
                     multiline
