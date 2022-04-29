@@ -1,27 +1,14 @@
-import { Avatar, Box, Button, Container, Drawer, FormControl, Grid, IconButton, Paper, SxProps, TextField, Tooltip, Typography, } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
+import { Avatar, Box, Button, Container, Drawer, IconButton, SxProps, TextField, Typography, } from "@mui/material";
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-import { useContext, useEffect, useState } from "react";
-import { ReactChild, ReactFragment, ReactPortal, MouseEventHandler } from 'react';
-import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { useContext, useState } from "react";
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { APIContext } from "../Context/AuthContext";
-import edit from "material-ui/svg-icons/image/edit";
-import React from "react";
-import axios from "axios";
-import e from "express";
 
-
-
-interface AppBarProps extends MuiAppBarProps {
-    open?: boolean;
-}
 
 const UserInfo = () => {
     const [postValue, setPostValue] = useState('')
-    const [userInfo, setUserInfo] = useState('')
+    const [userInfo, setUserInfo] = useState(/* insert data from db */'Jag väger 235kg')
     const [userPosts, setUserPosts] = useState([]);
     const [open, setOpen] = useState(false);
 
@@ -51,17 +38,16 @@ const UserInfo = () => {
     const handleChange = (e: { target: { value: any; id: string; }; }) => {
         //User info textfield
         if (e.target.id === 'bio') {
-            console.log(e.target)
             setUserInfo(e.target.value);
             //Create post textfield
         } else {
-            console.log(e.target)
             setPostValue(e.target.value);
         }
     };
 
-    const handleCreatePost = (e: { preventDefault: () => void; }) => {
+    const handleSubmission = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
+        //send textinput values to db
         console.log(postValue);
         console.log(userInfo)
     }
@@ -102,12 +88,22 @@ const UserInfo = () => {
                     </IconButton>
                     <Typography sx={editText}>Are you sure you want to delete this account?</Typography>
                 </DrawerHeader>
-                <Button type="button" sx={confirmBtn} onClick={() => { handleDrawerClose(); }}>No</Button>
-                <Button type="button" sx={confirmBtn} onClick={() => { console.log('deleted user') }}>Yes</Button>
+                <Button
+                    type="button"
+                    sx={confirmBtn}
+                    onClick={() => { handleDrawerClose(); }}>
+                    No
+                </Button>
+                <Button
+                    type="button"
+                    sx={confirmBtn}
+                    onClick={() => { console.log('deleted user') }}>
+                    Yes
+                </Button>
             </Drawer>
             <Box
                 component='form'
-                onSubmit={handleCreatePost}>
+                onSubmit={handleSubmission}>
                 <Typography sx={userText}>Your bio</Typography>
                 <TextField
                     id="bio"
@@ -125,7 +121,7 @@ const UserInfo = () => {
             </Box>
             <Box
                 component='form'
-                onSubmit={handleCreatePost}>
+                onSubmit={handleSubmission}>
                 <Typography sx={userText}>Create Post</Typography>
                 <TextField
                     required
@@ -186,36 +182,10 @@ const confirmBtn: SxProps = {
     marginTop: '1rem',
     width: '5rem'
 }
-const deleteBtn: SxProps = {
-    float: 'right',
-    color: 'red'
-}
 
-const drawer: SxProps = {
-    backgroundColor: '#D3D3D3'
-}
 const editText: SxProps = {
     fontSize: '2rem',
     marginLeft: '2rem',
-}
-const userInfo: SxProps = {
-    backgroundColor: '#E5E5E5',
-    width: '100%',
-    height: '30rem',
-}
-const textfield: SxProps = {
-    marginTop: '3rem',
-    width: '100%',
-}
-const newPost: SxProps = {
-    backgroundColor: '#E5E5E5',
-    width: '100%',
-    height: '15rem',
-    marginBottom: '1rem'
-}
-const text: SxProps = {
-    marginTop: '3rem',
-    fontSize: '2rem'
 }
 const userText: SxProps = {
     marginTop: '3rem',
@@ -229,14 +199,6 @@ const profile: SxProps = {
 const profileText: SxProps = {
     fontSize: '2rem',
     marginRight: '1rem'
-}
-const editIcon: SxProps = {
-    cursor: 'pointer',
-    color: 'blue',
-}
-const buttonAlign: SxProps = {
-    display: 'flex',
-    justifyContent: 'flex-end'
 }
 const button: SxProps = {
     backgroundColor: '#A1BFED',
