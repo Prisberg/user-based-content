@@ -27,7 +27,7 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       //return vad som helst
       return (
-        <BadGate/>
+        <BadGate />
       )
     }
 

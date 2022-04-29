@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import axios, { AxiosResponse } from "axios";
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, SxProps, ThemeProvider } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -18,13 +18,15 @@ import IconButton from '@mui/material/IconButton';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Visibility } from '@mui/icons-material';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
 interface State {
   username: string;
   email: string;
   password: string;
   showPassword: boolean;
 }
-
 
 function Copyright(props: any) {
   return (
@@ -45,7 +47,7 @@ export default function Register() {
   const [username, setUsername] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-
+  const navigate = useNavigate();
 
   const register = async () => {
     await axios.post("http://localhost:4000/register", {
@@ -55,10 +57,8 @@ export default function Register() {
     }, {
       withCredentials: true
     }).then((res: AxiosResponse) => {
-      if (res.data === "success") {
-        console.log('suc');
-        window.location.href = "/"
-      }
+      console.log('Success')
+      navigate("/login")
     }, () => {
       console.log("Failure");
     })
@@ -71,11 +71,13 @@ export default function Register() {
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    register();
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
+
+    //NOT WORKING
     if (!data) {
-      window.location.href = "/Login"
+      navigate("/login")
     }
   };
 
@@ -94,31 +96,25 @@ export default function Register() {
     event.preventDefault();
   };
 
-
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
-          sx={{
-            marginTop: 10,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
+          sx={boxStyle}
         >
           <Avatar sx={{ m: 1, bgcolor: '#42a5f5' }}>
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
                   <TextField
                     autoComplete="given-name"
+                    type="tex"
                     name="userName"
                     required
                     fullWidth
@@ -177,7 +173,6 @@ export default function Register() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                onClick={register}
                 sx={{ mt: 3, mb: 2 }}
               >
                 Sign Up
@@ -197,4 +192,11 @@ export default function Register() {
       </Container>
     </ThemeProvider>
   );
+}
+
+const boxStyle: SxProps = {
+  marginTop: 10,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
 }

@@ -4,16 +4,16 @@ import { useEffect, useState } from "react";
 // 
 function PostsFeed() {
     const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const { data } = await axios.get(
-        `http://localhost:4000/posts`
-      );
-      setPosts(data);
-    }
-    fetchData();
-}, []);
-console.log(posts);
+    useEffect(() => {
+        async function fetchData() {
+            const { data } = await axios.get(
+                `http://localhost:4000/posts`
+            );
+            setPosts(data);
+        }
+        fetchData();
+    }, []);
+    console.log(posts);
 
     return (
         <Box sx={boxStyle}>
@@ -27,7 +27,7 @@ console.log(posts);
                     </Paper>
                     <Paper sx={usernamePaperStyle} elevation={3}>
                         <Typography sx={usernameStyle} variant="h6">
-                            
+
                         </Typography>
                     </Paper>
                 </Box>
@@ -66,7 +66,7 @@ const usernameStyle: SxProps = {
 const boxStyle: SxProps = {
     paddingTop: '1rem',
     height: '100%',
-    width: {xs: '100', md: '80%', xl: '60%'},
+    width: { xs: '100', md: '80%', xl: '60%' },
 }
 
 const contentPaperStyle: SxProps = {

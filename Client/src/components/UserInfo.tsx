@@ -1,12 +1,16 @@
-import { Avatar, Box, Button, Container, Drawer, Grid, IconButton, Paper, SxProps, TextField, Tooltip, Typography, } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
+import { Avatar, Box, Button, Container, Drawer, IconButton, SxProps, TextField, Typography, } from "@mui/material";
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+
 import { useContext, useEffect, useRef, useState } from "react";
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+
+
+import BadGate from "./BadGate";
+
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { APIContext } from "../Context/AuthContext";
+
 import edit from "material-ui/svg-icons/image/edit";
 import React from "react";
 import axios, { AxiosResponse } from "axios";
@@ -36,8 +40,16 @@ const UserInfo: React.FC<Props> = () => {
     const [description, setDescription] = useState<string>("")
     const desc = useRef();
 
+
+
+
+    const [postValue, setPostValue] = useState('')
+    const [userInfo, setUserInfo] = useState(/* insert data from db */'Jag väger 235kg')
+  
+
+
     const ctx = useContext(APIContext);
-    console.log(ctx?.id);
+    /*     console.log(ctx?.id); */
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -103,10 +115,29 @@ const UserInfo: React.FC<Props> = () => {
         }
       };
 
+    const handleChange = (e: { target: { value: any; id: string; }; }) => {
+        //User info textfield
+        if (e.target.id === 'bio') {
+            setUserInfo(e.target.value);
+            //Create post textfield
+        } else {
+            setPostValue(e.target.value);
+        }
+    };
+
+    const handleSubmission = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        //send textinput values to db
+        console.log(postValue);
+        console.log(userInfo)
+        setPostValue('')
+    }
+
     return (
-        <Container>
-            <Box>
+        ctx ?
+            <Container>
                 <Box sx={profile}>
+
                 <Typography sx={profileText}>
                 {ctx?.username}
                 </Typography>
@@ -144,80 +175,67 @@ const UserInfo: React.FC<Props> = () => {
                 <CloseIcon sx={iconStyle} />
                 </IconButton>
                 </DrawerHeader>
+
                     <Typography sx={profileText}>
-                        User Profile
+                        {ctx?.username}
                     </Typography>
                     <Avatar />
-
-                    </Drawer> 
                 </Box>
-               
-
-               {/* <Drawer
-                    sx={{
-                        position: 'absolute',
-                        flexShrink: 0,
-                        '& .MuiDrawer-paper': {
-                            marginTop: '10rem',
-                            marginRight: '20rem',
-                            width: { xs: drawerWidth, sm: '50%', md: '50%', lg: '50%' },
-                            height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
-                            backgroundColor: '#fff',
-                            borderRadius: '20px'
-                        },
-                    }}
-                    variant="persistent"
-                    anchor="right"
-                    open={open}
-                >
-                    <DrawerHeader>
-                        <IconButton onClick={handleDrawerClose}>
-                            <CloseIcon sx={iconStyle} />
-                        </IconButton>
-                        <Typography sx={editText}>Edit post</Typography>
-                    </DrawerHeader>
-
-                    <TextField  variant="standard">
-
-                    </TextField>
-                    <Button type="submit" sx={confirmBtn}>Confirm</Button>
-
-                </Drawer>  */}
+r
                 <Button>
-                    <PersonRemoveIcon onClick={handleDrawerOpen}
-                        sx={{ ...(open && { display: '' }), fontSize: '3rem', marginTop: '1rem', color: 'red' }} />
+                    <PersonRemoveIcon
+                        onClick={handleDrawerOpen}
+                        sx={removeIconStyle} />
                 </Button>
                 <Typography>Delete User</Typography>
                 <Drawer
-                    sx={{
-                        position: 'absolute',
-                        flexShrink: 0,
-                        '& .MuiDrawer-paper': {
-                            marginTop: '10rem',
-                            marginRight:{ xs: '1.5rem', sm: '8rem', lg:'20rem' },
-                            width: { xs: '90%', sm: '50%', md: '50%', lg: '50%' },
-                            height: { xs: '50%', sm: '50%', md: '40%', lg: '40%' },
-                            backgroundColor: '#ECECEC',
-                            borderRadius: '20px'
-                        },
-                    }}
+                    sx={drawerStyle}
                     variant="persistent"
                     anchor="right"
-                    open={open}
-                >
+                    open={open}>
                     <DrawerHeader >
                         <IconButton onClick={handleDrawerClose}>
                             <CloseIcon sx={iconStyle} />
                         </IconButton>
                         <Typography sx={editText}>Are you sure you want to delete this account?</Typography>
                     </DrawerHeader>
-                    <Button type="button" sx={confirmBtn} onClick={() => {handleDrawerClose();}}>No</Button>
-                    <Button type="button" sx={confirmBtn} onClick={() => {console.log('deleted user')}}>Yes</Button>
+                    <Button
+                        type="button"
+                        sx={confirmBtn}
+                        onClick={() => { handleDrawerClose(); }}>
+                        No
+                    </Button>
+                    <Button
+                        type="button"
+                        sx={confirmBtn}
+                        onClick={() => { console.log('deleted user') }}>
+                        Yes
+                    </Button>
                 </Drawer>
-
-                <Box>
+                <Box
+                    component='form'
+                    onSubmit={handleSubmission}>
+                    <Typography sx={userText}>Your bio</Typography>
+                    <TextField
+                        id="bio"
+                        required
+                        fullWidth
+                        multiline
+                        rows={4}
+                        value={userInfo}
+                        onChange={handleChange} />
+                    <Button
+                        type='submit'
+                        sx={button}>
+                        Update Bio
+                    </Button>
+                </Box>
+                <Box
+                    component='form'
+                    onSubmit={handleSubmission}>
                     <Typography sx={userText}>Create Post</Typography>
                     <TextField
+                        required
                         fullWidth
                         multiline
                         rows={4}
@@ -287,10 +305,27 @@ const UserInfo: React.FC<Props> = () => {
 
                 </Drawer>
         </Container>
-        
+            : <BadGate />
     );
 }
 
+const removeIconStyle: SxProps = {
+    fontSize: '3rem',
+    marginTop: '1rem',
+    color: 'red'
+}
+const drawerStyle: SxProps = {
+    position: 'absolute',
+    flexShrink: 0,
+    '& .MuiDrawer-paper': {
+        marginTop: '10rem',
+        marginRight: { xs: '1.5rem', sm: '8rem', lg: '20rem' },
+        width: { xs: '90%', sm: '50%', md: '50%', lg: '50%' },
+        height: { xs: '50%', sm: '50%', md: '40%', lg: '40%' },
+        backgroundColor: '#ECECEC',
+        borderRadius: '20px'
+    }
+}
 const confirmBtn: SxProps = {
     backgroundColor: '#A1BFED',
     color: 'black',
@@ -299,36 +334,10 @@ const confirmBtn: SxProps = {
     marginTop: '1rem',
     width: '5rem'
 }
-const deleteBtn: SxProps = {
-    float: 'right',
-    color: 'red'
-}
 
-const drawer: SxProps = {
-    backgroundColor: '#D3D3D3'
-}
 const editText: SxProps = {
     fontSize: '2rem',
     marginLeft: '2rem',
-}
-const userInfo: SxProps = {
-    backgroundColor: '#E5E5E5',
-    width: '100%',
-    height: '30rem',
-}
-const textfield: SxProps = {
-    marginTop: '3rem',
-    width: '100%',
-}
-const newPost: SxProps = {
-    backgroundColor: '#E5E5E5',
-    width: '100%',
-    height: '15rem',
-    marginBottom: '1rem'
-}
-const text: SxProps = {
-    marginTop: '3rem',
-    fontSize: '2rem'
 }
 const userText: SxProps = {
     marginTop: '3rem',
@@ -343,14 +352,6 @@ const profileText: SxProps = {
     fontSize: '2rem',
     marginRight: '1rem'
 }
-const editIcon: SxProps = {
-    cursor: 'pointer',
-    color: 'blue',
-}
-const buttonAlign: SxProps = {
-    display: 'flex',
-    justifyContent: 'flex-end'
-}
 const button: SxProps = {
     backgroundColor: '#A1BFED',
     fontSize: '1rem',
@@ -364,7 +365,12 @@ const iconStyle: SxProps = {
     fontSize: '2rem',
     color: 'black'
 }
-
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    justifyContent: 'flex-start',
+}));
 
 
 
