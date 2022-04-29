@@ -22,19 +22,6 @@ const UserInfo = () => {
         setOpen(false);
     };
 
-    let drawerWidth
-    if (!open) {
-        drawerWidth = '0%'
-    } else {
-        drawerWidth = '100%'
-    }
-    let drawerHeight
-    if (!open) {
-        drawerHeight = '0%'
-    } else {
-        drawerHeight = '100%'
-    }
-
     const handleChange = (e: { target: { value: any; id: string; }; }) => {
         //User info textfield
         if (e.target.id === 'bio') {
