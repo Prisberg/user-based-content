@@ -1,39 +1,19 @@
-import { Avatar, Box, Button, Container, Drawer, IconButton, SxProps, TextField, Typography, } from "@mui/material";
+import { Avatar, Box, Button, Container, Drawer, Grid, IconButton, Paper, SxProps, TextField, Tooltip, Typography, } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-
 import { useContext, useEffect, useRef, useState } from "react";
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-
-
-import BadGate from "./BadGate";
-
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { APIContext } from "../Context/AuthContext";
-
 import edit from "material-ui/svg-icons/image/edit";
 import React from "react";
 import axios, { AxiosResponse } from "axios";
+import BadGate from "./BadGate";
 
 
-
-interface AppBarProps extends MuiAppBarProps {
-    open?: boolean;
-}
-interface Props {
-
-}
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    justifyContent: 'flex-start',
-}));
-
-
-
-const UserInfo: React.FC<Props> = () => {
+function UserInfo() {
     const [open, setOpen] = React.useState(false);
     const [openEditPost, setOpenEditPost] = React.useState(false);
     const [userPosts, setUserPosts] = useState([]);
@@ -150,7 +130,8 @@ const UserInfo: React.FC<Props> = () => {
                 <Button onClick={handleDrawerOpen}
                     sx={{ ...(open && { display: '' }) }}>
                 <EditIcon 
-                sx={editIcon}/>
+                //sx={edit}
+                />
                 </Button>
                 </Tooltip>
                 <Drawer
@@ -180,8 +161,7 @@ const UserInfo: React.FC<Props> = () => {
                         {ctx?.username}
                     </Typography>
                     <Avatar />
-                </Box>
-r
+                </Drawer>
                 <Button>
                     <PersonRemoveIcon
                         onClick={handleDrawerOpen}
@@ -261,7 +241,8 @@ r
                             <Button onClick={handleEditDrawerOpen}
                             sx={{ ...(openEditPost && { display: '' }) }}>
                             <EditIcon 
-                            sx={editIcon}/>
+                            //sx={edit}
+                            />
                             </Button>
                             </Box>
                     </Paper>
