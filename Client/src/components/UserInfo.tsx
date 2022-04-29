@@ -1,17 +1,52 @@
 import { Avatar, Box, Button, Container, Drawer, IconButton, SxProps, TextField, Typography, } from "@mui/material";
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-import { useContext, useState } from "react";
+
+import { useContext, useEffect, useRef, useState } from "react";
+import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+
+
+import BadGate from "./BadGate";
+
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
 import { APIContext } from "../Context/AuthContext";
-import BadGate from "./BadGate";
+
+import edit from "material-ui/svg-icons/image/edit";
+import React from "react";
+import axios, { AxiosResponse } from "axios";
 
 
-const UserInfo = () => {
+
+interface AppBarProps extends MuiAppBarProps {
+    open?: boolean;
+}
+interface Props {
+
+}
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    justifyContent: 'flex-start',
+}));
+
+
+
+const UserInfo: React.FC<Props> = () => {
+    const [open, setOpen] = React.useState(false);
+    const [openEditPost, setOpenEditPost] = React.useState(false);
+    const [userPosts, setUserPosts] = useState([]);
+    const [description, setDescription] = useState<string>("")
+    const desc = useRef();
+
+
+
+
     const [postValue, setPostValue] = useState('')
     const [userInfo, setUserInfo] = useState(/* insert data from db */'Jag väger 235kg')
-    const [userPosts, setUserPosts] = useState([]);
-    const [open, setOpen] = useState(false);
+  
+
 
     const ctx = useContext(APIContext);
     /*     console.log(ctx?.id); */
@@ -22,6 +57,63 @@ const UserInfo = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    const handleEditDrawerOpen = () => {
+        setOpenEditPost(true);
+    };
+    const handleEditDrawerClose = () => {
+        setOpenEditPost(false);
+    };
+
+    let drawerWidth
+    if (!open || !openEditPost) {
+        drawerWidth = '0%'
+    } else {
+        drawerWidth = '100%'
+    }
+    let drawerHeight
+    if (!open || !openEditPost) {
+        drawerHeight = '0%'
+    } else {
+        drawerHeight = '100%'
+    }
+
+    useEffect(() => {
+        async function fetchData() {
+          const { data } = await axios.get(`http://localhost:4000/posts/profile/` + ctx?.id);
+          setUserPosts(data);
+        }
+        fetchData();
+    }, [ctx?.id]);
+    console.log(userPosts);
+
+    async function editPost() {
+        await axios.put("http://localhost:4000/", {
+            description
+          }, {
+            withCredentials: true
+          }).then((res: AxiosResponse) => {
+            if (res.data === "success") {
+              console.log('suc');
+            }
+          }, () => {
+            console.log("Failure");
+          })
+      }
+      const textInput = React.useRef(null);
+
+      const submitHandler = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        const newPost = {
+            userId: ctx?.id,
+            description,
+        };
+        try {
+          await axios.post("http://localhost:4000/posts", newPost);
+          window.location.reload();
+        } catch (err) {
+            console.log("Failure")
+        }
+      };
 
     const handleChange = (e: { target: { value: any; id: string; }; }) => {
         //User info textfield
@@ -41,26 +133,55 @@ const UserInfo = () => {
         setPostValue('')
     }
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //       const { data } = await axios.post(
-    //         `http://localhost:4000/posts`
-    //       );
-    //       setUserPosts(data);
-    //     }
-    //     fetchData();
-    // }, []);
-    // console.log(userPosts);
-
     return (
         ctx ?
             <Container>
                 <Box sx={profile}>
+
+                <Typography sx={profileText}>
+                {ctx?.username}
+                </Typography>
+                <Avatar />
+                </Box>
+                <Tooltip 
+                title="Edit"
+                // sx={edit}
+                >
+                <Button onClick={handleDrawerOpen}
+                    sx={{ ...(open && { display: '' }) }}>
+                <EditIcon 
+                sx={editIcon}/>
+                </Button>
+                </Tooltip>
+                <Drawer
+                sx={{
+                position: 'absolute',
+                flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                    marginTop: '10rem',
+                    marginRight: '20rem',
+                    width: { xs: drawerWidth, sm: '35%', md: '25%', lg: '50%' },
+                    height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
+                    backgroundColor: '#fff',
+                    borderRadius: '20px'
+                    },
+                }}
+                variant="persistent"
+                anchor="right"
+                open={open}
+                > 
+                 <DrawerHeader>
+                <IconButton onClick={handleDrawerClose}>
+                <CloseIcon sx={iconStyle} />
+                </IconButton>
+                </DrawerHeader>
+
                     <Typography sx={profileText}>
                         {ctx?.username}
                     </Typography>
                     <Avatar />
                 </Box>
+r
                 <Button>
                     <PersonRemoveIcon
                         onClick={handleDrawerOpen}
@@ -118,32 +239,72 @@ const UserInfo = () => {
                         fullWidth
                         multiline
                         rows={4}
-                        value={postValue}
-                        onChange={handleChange} />
+                        type="text"
+                        value={description}
+                        inputRef={textInput}
+                        onChange={e => setDescription(e.target.value)}
+                        />
                     <Button
+                        onClick={submitHandler}
                         type='submit'
                         sx={button}>
-                        Submit Post
+                         Post
                     </Button>
                 </Box>
-                {/* <Box>
-                    <Typography sx={text}>Your Posts</Typography>
-                    {posts.map((posts) => (
-                        <Paper key={posts.id} sx={newPost}>
-                            <Button sx={deleteBtn}>
-                                <DeleteForeverIcon />
+                <Box >
+            {userPosts.map((post: any) => (
+                <Box  key={post._id}>
+                    <Paper elevation={3} >
+                        <Box >
+                            <Typography variant="h5">{post.description}</Typography>
+                            <Typography></Typography>
+                            <Button onClick={handleEditDrawerOpen}
+                            sx={{ ...(openEditPost && { display: '' }) }}>
+                            <EditIcon 
+                            sx={editIcon}/>
                             </Button>
-                            <Button>
-                            <EditIcon
-                            sx={editIcon} />
-                            </Button>
-                            <Typography >
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus quis eligendi sit numquam odit corporis, quasi, veniam quibusdam harum laborum rerum nisi asperiores unde hic! Alias atque tempore cumque id!
-                            </Typography>
-                        </Paper>
-                    ))}
-                </Box> */}
-            </Container >
+                            </Box>
+                    </Paper>
+                    <Paper  elevation={3}>
+                        <Typography  variant="h6">
+                            {ctx?.username}
+                        </Typography>
+                    </Paper>
+                </Box>
+                
+            ))}
+        </Box>
+        <Drawer
+                    sx={{
+                        position: 'absolute',
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                            marginTop: '10rem',
+                            marginRight: '20rem',
+                            width: { xs: drawerWidth, sm: '50%', md: '50%', lg: '50%' },
+                            height: { xs: drawerWidth, sm: '40%', md: '40%', lg: '40%' },
+                            backgroundColor: '#fff',
+                            borderRadius: '20px'
+                        },
+                    }}
+                    variant="persistent"
+                    anchor="right"
+                    open={openEditPost}
+                >
+                    <DrawerHeader>
+                        <IconButton onClick={handleEditDrawerClose}>
+                            <CloseIcon sx={iconStyle} />
+                        </IconButton>
+                        <Typography sx={editText}>Edit post</Typography>
+                    </DrawerHeader>
+
+                    <TextField  variant="standard">
+
+                    </TextField>
+                    <Button type="submit" sx={confirmBtn}>Confirm</Button>
+
+                </Drawer>
+        </Container>
             : <BadGate />
     );
 }

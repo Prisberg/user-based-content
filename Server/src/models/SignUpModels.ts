@@ -11,13 +11,13 @@ const signupTemplate = new mongoose.Schema({
   email:{  
     type: String,
     require: true,
-    max:50,
+    maxLength:50,
     unique: true
 },
   password: { 
     type: String,
     require: true,
-    min:6,
+    minLength:6,
 },
   profilePic: {
     type: String,

@@ -12,12 +12,12 @@ import { UserInterface, DbUserInterface } from './Interfaces';
 import postsRouter from './routes/posts.routes';
 import signupRouter from './routes/register.routes';
 import usersRouter from './routes/users.routes';
+
+
 const port = 4000;
 const routes = Router();
-
-
-
 const myStrategy = passportLocal.Strategy
+
 dotenv.config();
 mongoose.connect(
   `mongodb://localhost:27017`,(err) => {
