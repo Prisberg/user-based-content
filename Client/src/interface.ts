@@ -1,6 +1,7 @@
 export interface UserInterface {
   id: string;
   username: string;
+  bio: string;
   isAdmin: boolean;
 }
 

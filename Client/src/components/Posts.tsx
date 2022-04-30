@@ -1,9 +1,11 @@
 import { Box, Paper, SxProps, Typography } from "@mui/material";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 // 
 function PostsFeed() {
     const [posts, setPosts] = useState([]);
+    const [users, setUsers] = useState([]);
+
     useEffect(() => {
         async function fetchData() {
             const { data } = await axios.get(
@@ -15,13 +17,23 @@ function PostsFeed() {
     }, []);
     console.log(posts);
 
-    
+
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         axios.get("http://localhost:4000/user/all", { withCredentials: true }).then((res: AxiosResponse) => {
+    //             setUsers (res.data);
+    //   })
+    //     }
+    //     fetchData();
+    // }, []);
+    // console.log(users);
+
+ 
 
     return (
         <Box sx={boxStyle}>
             {posts.map((post: any) => (
                 <Box sx={postStyle} key={post._id}>
-                    
                     <Paper elevation={3} sx={contentPaperStyle}>
                         <Box sx={contentStyle}>
                             <Typography variant="h5" sx={postText}>{post.description}</Typography>
@@ -30,7 +42,7 @@ function PostsFeed() {
                     </Paper>
                     <Paper sx={usernamePaperStyle} elevation={3}>
                         <Typography sx={usernameStyle} variant="h6">
-
+                            {post.userName}
                         </Typography>
                     </Paper>
                 </Box>
