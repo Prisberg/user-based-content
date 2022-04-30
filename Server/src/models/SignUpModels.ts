@@ -27,6 +27,10 @@ const signupTemplate = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  bio: { 
+    type: String,
+    default: '',
+  },
   date: {
     type: Date,
     default: Date.now()

@@ -2,12 +2,10 @@ import { Avatar, Box, Button, Container, Drawer, Grid, IconButton, Paper, SxProp
 import EditIcon from '@mui/icons-material/Edit';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { useContext, useEffect, useRef, useState } from "react";
-import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { APIContext } from "../Context/AuthContext";
-import edit from "material-ui/svg-icons/image/edit";
 import React from "react";
 import axios, { AxiosResponse } from "axios";
 import BadGate from "./BadGate";
@@ -19,13 +17,8 @@ function UserInfo() {
     const [userPosts, setUserPosts] = useState([]);
     const [description, setDescription] = useState<string>("")
     const [selectedPost, setSelectedPost] = useState()
-    const desc = useRef();
-
-
-
-
     const [postValue, setPostValue] = useState('')
-    const [userInfo, setUserInfo] = useState(/* insert data from db */'Jag väger 235kg')
+    const [userBio, setUserBio] = useState()
   
 
 
@@ -66,18 +59,36 @@ function UserInfo() {
 
     useEffect(() => {
         async function fetchData() {
-          const { data } = await axios.get(`http://localhost:4000/posts/profile/` + ctx?.id);
-          setUserPosts(data);
+            try {
+                const { data } = await axios.get(`http://localhost:4000/posts/profile/${ctx?.id}`);
+                setUserPosts(data);
+            } catch (err) {
+                console.log(err);
+            }
         }
         fetchData();
     }, [ctx?.id]);
-    console.log(userPosts);
+    console.log(ctx);
 
     async function editPost() {
         
         await axios.put("http://localhost:4000/posts/" + selectedPost, {
             userId: ctx?.id,
             description
+          }, {
+            withCredentials: true
+          }).then((res: AxiosResponse) => {
+              window.location.reload();
+              console.log('suc');
+          }, () => {
+            console.log("Failure");
+          })
+      }
+    async function editUser() {
+        
+        await axios.put("http://localhost:4000/user/" + ctx?.id, {
+            userId: ctx?.id,
+            bio: userBio
           }, {
             withCredentials: true
           }).then((res: AxiosResponse) => {
@@ -95,12 +106,24 @@ function UserInfo() {
             console.log("Failure");
           })
       }
+      async function deleteUser() {
+        await axios.delete("http://localhost:4000/user/" + ctx?.id, 
+        { data: { 
+            userId: ctx?.id 
+        } },).then((res: AxiosResponse) => {
+            window.location.href = "/"
+            console.log('suc');
+          }, () => {
+            console.log("Failure");
+          })
+      }
       const textInput = React.useRef(null);
 
       const submitHandler = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const newPost = {
             userId: ctx?.id,
+            userName: ctx?.username,
             description,
         };
         try {
@@ -110,24 +133,26 @@ function UserInfo() {
             console.log("Failure")
         }
       };
-
+      const logout = () => {
+        axios.get("http://localhost:4000/logout", {
+            withCredentials: true
+        }).then((res: AxiosResponse) => {
+            if (res.data === "success") {
+                window.location.href = "/";
+            }
+        })
+    }
     const handleChange = (e: { target: { value: any; id: string; }; }) => {
         //User info textfield
         if (e.target.id === 'bio') {
-            setUserInfo(e.target.value);
+            setUserBio(e.target.value);
+            
             //Create post textfield
         } else {
             setPostValue(e.target.value);
         }
     };
-
-    const handleSubmission = (e: { preventDefault: () => void; }) => {
-        e.preventDefault();
-        //send textinput values to db
-        console.log(postValue);
-        console.log(userInfo)
-        setPostValue('')
-    }
+    
     return (
         ctx ?
             <Container>
@@ -135,6 +160,8 @@ function UserInfo() {
 
                 <Typography sx={profileText}>
                 {ctx?.username}
+                <br/>
+                {ctx?.bio}
                 </Typography>
                 <Avatar />
                 </Box>
@@ -205,13 +232,16 @@ function UserInfo() {
                     <Button
                         type="button"
                         sx={confirmBtn}
-                        onClick={() => { console.log('deleted user') }}>
+                        onClick={() => { 
+                            deleteUser();
+                            logout(); 
+                            }}>
                         Yes
                     </Button>
                 </Drawer>
                 <Box
                     component='form'
-                    onSubmit={handleSubmission}>
+                    >
                     <Typography sx={userText}>Your bio</Typography>
                     <TextField
                         id="bio"
@@ -219,17 +249,19 @@ function UserInfo() {
                         fullWidth
                         multiline
                         rows={4}
-                        value={userInfo}
-                        onChange={handleChange} />
+                        value={userBio}
+                        onChange={handleChange}
+                        />
                     <Button
+                        onClick={editUser}
                         type='submit'
-                        sx={button}>
+                        sx={button}
+                        >
                         Update Bio
                     </Button>
                 </Box>
                 <Box
                     component='form'
-                    onSubmit={handleSubmission}
                     sx={postBox}>
                     <Typography sx={userText}>Create Post</Typography>
                     <TextField
@@ -268,7 +300,7 @@ function UserInfo() {
                             </Button>
                             <Button onClick={() => {
                             setSelectedPost(post?._id)
-                            setOpenDelete(true)
+                            handleDeleteDrawerOpen()
                             }}sx={{ float: 'right', color: 'red' }}>
                             <DeleteForeverIcon/>
                             </Button>
@@ -280,23 +312,28 @@ function UserInfo() {
                     anchor="right"
                     open={openDelete}>
                     <DrawerHeader >
-                        <IconButton onClick={handleDrawerClose}>
+                        <IconButton onClick={handleDeleteDrawerClose}>
                             <CloseIcon sx={iconStyle} />
                         </IconButton>
-                        <Typography sx={editText}>Are you sure you want to delete this account?</Typography>
+                        <Typography sx={editText}>Are you sure you want to delete this post?</Typography>
                     </DrawerHeader>
                     <Button
                         type="button"
                         sx={confirmBtn}
                         onClick={() => { 
-                            handleDrawerClose();
+                            handleDeleteDrawerClose();
                          }}>
                         No
                     </Button>
                     <Button
                         type="button"
                         sx={confirmBtn}
-                        onClick={deletePost}>
+                        onClick={() => 
+                        {
+                            deletePost();
+                            handleDeleteDrawerClose();
+                        }
+                        }>
                         Yes
                     </Button>
                 </Drawer>
