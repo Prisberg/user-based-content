@@ -1,9 +1,22 @@
 import express, { Request, Response, Router  } from 'express';
 import bcrypt from 'bcryptjs';
 import User  from '../models/SignUpModels'
+import { DbUserInterface, UserInterface } from 'src/Interfaces';
 
 
 const usersRouter = Router();
+//get all users
+usersRouter.get('/all', async  (req :Request, res:Response) => {
+  const users =  User.find((err: any, users: any) => {
+    console.log(users);
+    
+    if (err) {
+      res.send("Error!");
+    } else {
+      res.send(users);
+    }
+  });
+  })
 //  Update user
 usersRouter.put('/:id', async (req :Request, res:Response) => {
   if(req.body.userId === req.params.id || req.body.isAdmin) {
@@ -27,7 +40,7 @@ usersRouter.put('/:id', async (req :Request, res:Response) => {
           return res.status(403).json('can not update ')
         }
 })
-
+// logged in user
 usersRouter.get('/',  async (req :Request, res:Response) => {
   res.send(req.user);
 })
@@ -57,9 +70,8 @@ usersRouter.get('/:id', async (req, res) => {
   }
 })
 
-usersRouter.get('/', async (req, res) => {
-  res.send(req.user);
-})
+
+
 
 
 export default usersRouter;

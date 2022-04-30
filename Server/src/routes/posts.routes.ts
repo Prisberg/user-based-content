@@ -7,9 +7,9 @@ import User from '../models/SignUpModels';
 const postsRouter = Router();
 
 // Get All posts 
-postsRouter.get('/',  (req :Request, res:Response) => {
+postsRouter.get('/', async (req :Request, res:Response) => {
 
-  const posts = Post.find((err: any, posts: any) => {
+  const posts =  Post.find((err: any, posts: any) => {
     console.log(posts);
     
     if (err) {
